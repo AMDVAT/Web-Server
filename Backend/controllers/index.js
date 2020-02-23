@@ -1,4 +1,5 @@
 'use strict';
+const jwt = require('jsonwebtoken');
 const usuario = require('./usuario');
 const producto = require('./producto');
 
@@ -33,8 +34,18 @@ module.exports = function (router) {
             const portador = cabecera.split(" ");
             const token = portador[1];
             req.token = token;
+
             /* verificar que el token de un administrador este haciendo la peticion */
-            next();
+            jwt.verify(req.token,'@administrador123@', (err,data) =>{
+                if(err){
+                    res.json({
+                        status: 403
+                    });
+                }else{
+                    next();
+                }
+            });
+            
         } else {
             //no existe token
             res.json({
@@ -44,6 +55,7 @@ module.exports = function (router) {
             })
         }
     }
+    
     function LoginExistente(req, res, next) {
 
         //verifico si ya trae un token si no si se permite el acceso a login de lo contrario 

@@ -38,7 +38,6 @@ usuario.login = (req, res) => {
             });
         }
 
-
     } else {
 
         res.json({
