@@ -1,6 +1,5 @@
 'use strict';
 
-var config = require('../config/config');
 const jwt = require('jsonwebtoken');
 
 const usuario = {}
@@ -9,16 +8,36 @@ usuario.login = (req, res) => {
 
     const { nombre, contrasena } = req.body;
 
-    if (nombre === "osuna" && contrasena === "osuna123") {      //hacer la busqueda del usuario en la base de datos 
+    //hacemos la consulta a la base de datos o servicio de donde se consumira.
+    const usuario = { id: 1, nombre: "osuna", contrasena: "osuna123", tipoUs: 1 }
+    //const id = usuario.id;
+    if (nombre === usuario.nombre && contrasena === usuario.contrasena) {      //hacer la busqueda del usuario en la base de datos 
 
-        const token = jwt.sign({ nombre }, config.llave, {          //{nombre}  -  config.llave -> palabra secreta
-            expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
-        });
+        var token = {};
+        if (usuario.tipoUs == 1) {                                              //tipo de usuario administrador
+            token = jwt.sign({nombre}, '@administrador123@', {                //{id}  - llave -> palabra secreta
+                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+            });
 
-        res.json({
-            mensaje: "200",
-            token: token
-        });
+            res.json({
+                status: 200,
+                token:token,
+                mensaje: "administrador"
+
+            });
+        } else {
+            token = jwt.sign({nombre}, '@Usuario123@', {                      //{id}  -  llave -> palabra secreta
+                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+            });
+
+            res.json({
+                status: 200,
+                token: token,
+                mensaje: "usuario"
+
+            });
+        }
+
 
     } else {
 
@@ -46,10 +65,16 @@ usuario.Registrar = (req, res) => {
     };
 
     //insertar usuario a la base de datos
-
-    const token = jwt.sign({ nombre }, config.llave, {          //{nombre}  -  config.llave -> palabra secreta
-        expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
-    });
+    var token = {}
+    if (User.tipoUs == 1) {   //tipo de usuario administrador
+         token = jwt.sign({nombre}, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
+            expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
+        });
+    } else {
+        token  = jwt.sign({ nombre }, '@Usuario123@', {          //{nombre}  -  llave -> palabra secreta
+            expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
+        });
+    }
 
     res.json({
         status: "200",
@@ -57,8 +82,8 @@ usuario.Registrar = (req, res) => {
     });
 };
 
-usuario.Editar = (req,res) =>{
-    
+usuario.Editar = (req, res) => {
+
 
 };
 

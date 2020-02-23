@@ -13,13 +13,52 @@ module.exports = function (router) {
     });
 
     //usuarios
-    router.post('/usuario/autenticar', usuario.login);
-    router.post('/usuario/registrar', usuario.Registrar);
+    router.post('/usuario/autenticar', LoginExistente, usuario.login);
+    router.post('/usuario/registrar', LoginExistente, usuario.Registrar);
 
     //productos
-    router.post('/producto/crear',producto.CrearP);
-    router.put('/producto/editar/:id',producto.EditarP);
-    router.delete('/producto/eliminar/:id',producto.EliminarP);
-    router.get('/producto/listar',producto.ListarP);
-    
+    router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
+    router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
+    router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
+    router.get('/producto/listar', LoginExistente, producto.ListarP);
+
+
+
+    function ValidarToken(req, res, next) {
+
+        const cabecera = req.headers['token'];
+        console.log("el token es: " + cabecera);
+        if (typeof cabecera !== 'undefined') {
+            //quitamos la palabra bearer 
+            const portador = cabecera.split(" ");
+            const token = portador[1];
+            req.token = token;
+            /* verificar que el token de un administrador este haciendo la peticion */
+            next();
+        } else {
+            //no existe token
+            res.json({
+                //no permitido
+                status: 403,
+                mesanje: "no permitido"
+            })
+        }
+    }
+    function LoginExistente(req, res, next) {
+
+        //verifico si ya trae un token si no si se permite el acceso a login de lo contrario 
+        const cabecera = req.headers['token'];
+        console.log("el token es: " + cabecera);
+        if (typeof cabecera !== 'undefined') {
+
+            res.json({
+                //no permitido
+                status: 403,
+                mesanje: "ya tiene sesion iniciada."
+            })
+
+        } else {
+            next();
+        }
+    }
 }
