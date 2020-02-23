@@ -32,16 +32,19 @@ module.exports = function (router) {
         if (typeof cabecera !== 'undefined') {
             //quitamos la palabra bearer 
             const portador = cabecera.split(" ");
-            const token = portador[1];
+            const token = cabecera;
             req.token = token;
 
             /* verificar que el token de un administrador este haciendo la peticion */
             jwt.verify(req.token,'@administrador123@', (err,data) =>{
                 if(err){
                     res.json({
-                        status: 403
+                        status: 403,
+                        mensaje: "no es administrador"
+                    
                     });
                 }else{
+                    console.log(data);
                     next();
                 }
             });
