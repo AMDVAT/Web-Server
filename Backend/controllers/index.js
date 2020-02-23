@@ -1,12 +1,8 @@
 'use strict';
-
-var config = require('../config/config');
-
-//autenticacion
-const jwt = require('jsonwebtoken');
+const usuario = require('./usuario');
+const producto = require('./producto');
 
 module.exports = function (router) {
-
 
     router.get('/', function (req, res) {
 
@@ -16,34 +12,14 @@ module.exports = function (router) {
 
     });
 
-    router.post('/autenticar', (req, res) => {
+    //usuarios
+    router.post('/usuario/autenticar', usuario.login);
+    router.post('/usuario/registrar', usuario.Registrar);
 
-        const { usuario, contrasena } = req.body;
-
-        if (usuario === "osuna" && contrasena === "osuna123") {   //hacer la busqueda del usuario en la base de datos 
-
-            const payload = {
-                check: true
-            };
-
-            const token = jwt.sign(payload, config.llave, {  //payload -> lo que voy a guardar  -  config.llave -> palabra secreta
-                expiresIn: 1440     //tiempo de expiracion de la clave 24 horas
-            });
-
-            res.json({
-                mensaje: 'Autenticación correcta',
-                token: token
-            });
-
-        } else {
-
-            res.json({
-                mensaje: "Usuario o contraseña incorrectos"
-            });
-        }
-    });
-
-    router.post('/registrar', (req, res) => {
-
-    });
+    //productos
+    router.post('/producto/crear',producto.CrearP);
+    router.put('/producto/editar/:id',producto.EditarP);
+    router.delete('/producto/eliminar/:id',producto.EliminarP);
+    router.get('/producto/listar',producto.ListarP);
+    
 }
