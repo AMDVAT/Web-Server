@@ -81,7 +81,7 @@ usuario.Registrar = (req, res) => {
     });
 };
 
-usuario.Editar = (req, res) => {
+usuario.EditarU = (req, res) => {
     
     const usuario = {
         nombre: req.body.nombre,
@@ -101,7 +101,7 @@ usuario.Editar = (req, res) => {
     });
 };
 
-usuario.EliminarP = (req, res) => {
+usuario.EliminarU = (req, res) => {
 
     //eliminar el producto con el id especificado
     console.log(req.params.id);
@@ -111,7 +111,7 @@ usuario.EliminarP = (req, res) => {
     });
 }
 
-usuario.ListarP = (req, res) => {
+usuario.ListarU = (req, res) => {
 
     //arreglo de objetos usuarios
     res.send("usuarios existentes");

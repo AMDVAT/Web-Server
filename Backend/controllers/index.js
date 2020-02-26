@@ -16,9 +16,12 @@ module.exports = function (router) {
     //usuarios
     router.post('/usuario/autenticar', LoginExistente, usuario.login);
     router.post('/usuario/registrar', LoginExistente, usuario.Registrar);
-
+    router.put('/usuario/editar/:id', ValidarToken, usuario.EditarU);
+    router.delete('/usuario/eliminar/:id', ValidarToken, usuario.EliminarU);
+    router.get('/udsuario/listar', LoginExistente, usuario.ListarU);
     //productos
     router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
+    //router.get('/producto/crear', ValidarToken, producto.ListarCategorias);          //debo mostrar las categorias de los productos para que el forntend pueda ponerlos en un combo box 
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);
