@@ -9,7 +9,7 @@ usuario.login = (req, res) => {
     const { nombre, contrasena } = req.body;
 
     //hacemos la consulta a la base de datos o servicio de donde se consumira.
-    const usuario = { id: 1, nombre: "osuna", contrasena: "osuna123", tipoUs: 1 }
+    const usuario = { id: 1, nombre: "osuna", contrasena: "osuna123", tipoUs: 1 }   //tipo de usuario 1 administrador
     //const id = usuario.id;
     if (nombre === usuario.nombre && contrasena === usuario.contrasena) {      //hacer la busqueda del usuario en la base de datos 
 
@@ -41,7 +41,7 @@ usuario.login = (req, res) => {
     } else {
 
         res.json({
-            status: "403",
+            status: "400",
             mensaje: "credenciales incorrectas"
         });
     }
@@ -82,8 +82,39 @@ usuario.Registrar = (req, res) => {
 };
 
 usuario.Editar = (req, res) => {
+    
+    const usuario = {
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        email: req.body.email,
+        contrasena: req.body.password,
+        direccion: req.body.direccion,
+        telefono: req.body.telefono,
+        tipoUs: req.body.tipoUs
+    }
 
+    //editar usuario con el id especificado
+    console.log(req.params.id);
 
+    res.json({
+        status: 200
+    });
 };
+
+usuario.EliminarP = (req, res) => {
+
+    //eliminar el producto con el id especificado
+    console.log(req.params.id);
+
+    res.json({
+        status: 200
+    });
+}
+
+usuario.ListarP = (req, res) => {
+
+    //arreglo de objetos usuarios
+    res.send("usuarios existentes");
+}
 
 module.exports = usuario;

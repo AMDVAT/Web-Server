@@ -9,7 +9,7 @@ producto.CrearP = (req, res) => {
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
         precio: req.body.precio,
-        categoria: req.body.categoria
+        categoria: req.body.categoria               
     }
     //console.log('entro00000');
     console.log(product);
@@ -24,7 +24,7 @@ producto.EditarP = (req, res) => {
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
         precio: req.body.precio,
-        categoria: req.body.categoria
+        categoria: req.body.categoria           
     }
 
     //editar producto con el id especificado
@@ -45,6 +45,7 @@ producto.EliminarP = (req, res) => {
 }
 producto.ListarP = (req, res) => {
 
+    //arreglos de objetos productos   select *, categoria.Nombre, categoria.id From productos, categoria
     res.send("productos existentes");
 }
 
