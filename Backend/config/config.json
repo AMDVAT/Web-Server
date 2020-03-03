@@ -1,0 +1,40 @@
+{
+    "specialization": {},
+    "middleware": {
+        "compress": {
+            "enabled": true
+        },
+        "appsec": {
+            "module": {
+                "arguments": [
+                    {
+                        "csrf": false
+                    }
+                ]
+            }
+        },
+        "static": {
+            "module": {
+                "arguments": [
+                    "path:./.build"
+                ]
+            }
+        },
+        "router": {
+            "module": {
+                "arguments": [
+                    {
+                        "directory": "path:./controllers"
+                    }
+                ]
+            }
+        },
+        "logger": {
+            "module": {
+                "arguments": [
+                    "dev"
+                ]
+            }
+        }
+    }
+}
