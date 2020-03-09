@@ -74,15 +74,15 @@ producto.masVendido = async (req, res) => {
     //listar productos mas vendiddos
     res.json(/* resultado de la consulta */);
 }
-/*
+
 producto.top6Departamento = async (req, res) => {
 
     //listar productos top 6 d elos departamentos
-    res.json( resultado de la consulta );
+    res.json( /*resultado de la consulta*/ );
 }
 producto.top6MasBuscado = async (req, res) => {
 
     //listar productos top 6 d elos departamentos
-    res.json( resultado de la consulta );
-}*/
+    res.json( /*resultado de la consulta*/ );
+}
 module.exports = producto;

@@ -32,6 +32,9 @@ module.exports = function (router) {
     router.get('/producto/buscar/:nombre', producto.buscarNombre);
     router.get('/producto/recienIngreso', producto.recienIngreso);
     router.get('/producto/masVendido', producto.masVendido);
+    router.get('/producto/masVendido', producto.masVendido);
+    router.get('/producto/top6Departamento', producto.top6Departamento);
+    router.get('/producto/top6MasBuscado', producto.top6MasBuscado);
 
 
 
