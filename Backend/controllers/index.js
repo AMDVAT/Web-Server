@@ -26,6 +26,15 @@ module.exports = function (router) {
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);
 
+    //vistas de productos
+    router.get('/producto/listaCategorias', producto.ListaCategorias);
+    router.get('/producto/buscar/:categoria', producto.buscarCategoria);
+    router.get('/producto/buscar/:nombre', producto.buscarNombre);
+    router.get('/producto/recienIngreso', producto.recienIngreso);
+    router.get('/producto/masVendido', producto.masVendido);
+
+
+
 
 
     function ValidarToken(req, res, next) {
