@@ -4,51 +4,45 @@ CREATE DATABASE AMDVAT;
 USE AMDVAT;
 
 CREATE TABLE categoria (
-    id_categoria             INTEGER NOT NULL,
-    nombre                   VARCHAR(30),
+    id_categoria             INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre                   VARCHAR(30) NOT NULL,
+    descripcion              VARCHAR(255),
     categoria_id_categoria   INTEGER
 );
 
-ALTER TABLE categoria ADD CONSTRAINT categoria_pk PRIMARY KEY ( id_categoria );
-
 CREATE TABLE compra (
-    id_compra            INTEGER NOT NULL,
+    id_compra            INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     fecha                DATE,
     usuario_id_usuario   INTEGER NOT NULL
 );
 
-ALTER TABLE compra ADD CONSTRAINT compra_pk PRIMARY KEY ( id_compra );
-
 CREATE TABLE detalle_compra (
-    id_detallecompra    INTEGER NOT NULL,
+    id_detallecompra    INTEGER PRIMARY KEY AUTO_INCREMENT,
+    cantidad            INTEGER NOT NULL,
     compra_id_compra    INTEGER NOT NULL,
     stock_id_sucursal   INTEGER NOT NULL,
     stock_id_producto   INTEGER NOT NULL
 );
 
-ALTER TABLE detalle_compra ADD CONSTRAINT detalle_compra_pk PRIMARY KEY ( id_detallecompra );
-
 CREATE TABLE producto (
-    id_producto              INTEGER NOT NULL,
-    nombre                   VARCHAR(30),
-    descripcion              VARCHAR(50),
-    precio                   INTEGER,
-    ofertado                 INTEGER,
+    id_producto              INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre                   VARCHAR(30) NOT NULL,
+    descripcion              VARCHAR(50) NOT NULL,
+    precio                   INTEGER NOT NULL,
+    status                   INTEGER NOT NULL,
     precio_oferta            INTEGER,
+    foto                     VARCHAR(255) NOT NULL,
+    calificacion             INTEGER NOT NULL,
     categoria_id_categoria   INTEGER NOT NULL
 );
 
-ALTER TABLE producto ADD CONSTRAINT producto_pk PRIMARY KEY ( id_producto );
-
 CREATE TABLE reseña (
-    id_reseña              INTEGER NOT NULL,
+    id_reseña              INTEGER PRIMARY KEY AUTO_INCREMENT,
     comentario             VARCHAR(100),
     valoracion             INTEGER,
     usuario_id_usuario     INTEGER NOT NULL,
     producto_id_producto   INTEGER NOT NULL
 );
-
-ALTER TABLE reseña ADD CONSTRAINT reseña_pk PRIMARY KEY ( id_reseña );
 
 CREATE TABLE stock (
     cantidad               INTEGER,
@@ -60,33 +54,27 @@ ALTER TABLE stock ADD CONSTRAINT stock_pk PRIMARY KEY ( sucursal_id_sucursal,
                                                         producto_id_producto );
 
 CREATE TABLE sucursal (
-    id_sucursal   INTEGER NOT NULL,
-    nombre        VARCHAR(30),
-    direccion     VARCHAR(60),
+    id_sucursal   INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre        VARCHAR(30) NOT NULL,
+    direccion     VARCHAR(60) NOT NULL,
     numero        INTEGER
 );
 
-ALTER TABLE sucursal ADD CONSTRAINT sucursal_pk PRIMARY KEY ( id_sucursal );
-
 CREATE TABLE tipo_usuario (
-    id_tipousuario   INTEGER NOT NULL,
-    nombre           VARCHAR(20)
+    id_tipousuario   INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre           VARCHAR(20) NOT NULL
 );
 
-ALTER TABLE tipo_usuario ADD CONSTRAINT tipo_usuario_pk PRIMARY KEY ( id_tipousuario );
 
 CREATE TABLE usuario (
-    id_usuario     INTEGER NOT NULL,
-    nombre         VARCHAR(30),
-    apellido       VARCHAR(30),
-    email          VARCHAR(25),
-    password       VARCHAR(20),
-    direccion      VARCHAR(30),
-    telefono       INTEGER,
+    id_usuario     INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre         VARCHAR(30) NOT NULL,
+    apellido       VARCHAR(30) NOT NULL,
+    email          VARCHAR(25) NOT NULL,
+    password       VARCHAR(20) NOT NULL,
     tipo_usuario   INTEGER NOT NULL
 );
 
-ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id_usuario );
 
 ALTER TABLE categoria
     ADD CONSTRAINT categoria_categoria_fk FOREIGN KEY ( categoria_id_categoria )
