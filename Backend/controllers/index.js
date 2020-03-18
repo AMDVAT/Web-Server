@@ -25,6 +25,7 @@ module.exports = function (router) {
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);
+    router.post('/producto/crearCategoria'),ValidarToken,producto.crearCategoria
 
     //vistas de productos
     router.get('/producto/listaCategorias', producto.ListaCategorias);
