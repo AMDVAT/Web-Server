@@ -2,38 +2,38 @@
 
 const jwt = require('jsonwebtoken');
 
-const usuario = {}
+const usuario = {};
 
 usuario.login = (req, res) => {
 
     const { nombre, contrasena } = req.body;
 
     //hacemos la consulta a la base de datos o servicio de donde se consumira.
-    const usuario = { id: 1, nombre: "osuna", contrasena: "osuna123", tipoUs: 1 }   //tipo de usuario 1 administrador
+    const usuario = { id: 1, nombre: 'osuna', contrasena: 'osuna123', tipoUs: 1 };   //tipo de usuario 1 administrador
     //const id = usuario.id;
     if (nombre === usuario.nombre && contrasena === usuario.contrasena) {      //hacer la busqueda del usuario en la base de datos 
 
         var token = {};
         if (usuario.tipoUs == 1) {                                              //tipo de usuario administrador
-            token = jwt.sign({nombre}, '@administrador123@', {                //{id}  - llave -> palabra secreta
-                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
-            });
-
-            res.json({
-                status: 200,
-                token:token,
-                mensaje: "administrador"
-
-            });
-        } else {
-            token = jwt.sign({nombre}, '@Usuario123@', {                      //{id}  -  llave -> palabra secreta
+            token = jwt.sign({ nombre }, '@administrador123@', {                //{id}  - llave -> palabra secreta
                 expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
             });
 
             res.json({
                 status: 200,
                 token: token,
-                mensaje: "usuario"
+                mensaje: 'administrador'
+
+            });
+        } else {
+            token = jwt.sign({ nombre }, '@Usuario123@', {                      //{id}  -  llave -> palabra secreta
+                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+            });
+
+            res.json({
+                status: 200,
+                token: token,
+                mensaje: 'usuario'
 
             });
         }
@@ -41,8 +41,8 @@ usuario.login = (req, res) => {
     } else {
 
         res.json({
-            status: "400",
-            mensaje: "credenciales incorrectas"
+            status: '400',
+            mensaje: 'credenciales incorrectas'
         });
     }
 };
@@ -64,25 +64,25 @@ usuario.Registrar = (req, res) => {
     };
 
     //insertar usuario a la base de datos
-    var token = {}
+    var token = {};
     if (User.tipoUs == 1) {   //tipo de usuario administrador
-         token = jwt.sign({nombre}, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
+        token = jwt.sign({ nombre }, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
             expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
         });
     } else {
-        token  = jwt.sign({ nombre }, '@Usuario123@', {          //{nombre}  -  llave -> palabra secreta
+        token = jwt.sign({ nombre }, '@Usuario123@', {          //{nombre}  -  llave -> palabra secreta
             expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
         });
     }
 
     res.json({
-        status: "200",
+        status: '200',
         token: token
     });
 };
 
 usuario.EditarU = (req, res) => {
-    
+
     const usuario = {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
@@ -91,7 +91,7 @@ usuario.EditarU = (req, res) => {
         direccion: req.body.direccion,
         telefono: req.body.telefono,
         tipoUs: req.body.tipoUs
-    }
+    };
 
     //editar usuario con el id especificado
     console.log(req.params.id);
@@ -109,12 +109,16 @@ usuario.EliminarU = (req, res) => {
     res.json({
         status: 200
     });
-}
+};
 
-usuario.ListarU = (req, res) => {
-
-    //arreglo de objetos usuarios
-    res.send("usuarios existentes");
-}
+usuario.ListarU = async (req, res) => {
+    try {
+        const Usuario = req.db.models.usuario;
+        const data = await Usuario.findAll();
+        res.send(data);
+    } catch (error) {
+        res.status(500).send('No se pudo obtener los datos.');
+    }
+};
 
 module.exports = usuario;
