@@ -18,7 +18,7 @@ module.exports = function (router) {
     router.post('/usuario/registrar', LoginExistente, usuario.Registrar);
     router.put('/usuario/editar/:id', ValidarToken, usuario.EditarU);
     router.delete('/usuario/eliminar/:id', ValidarToken, usuario.EliminarU);
-    router.get('/udsuario/listar', LoginExistente, usuario.ListarU);
+    router.get('/udsuario/listar', usuario.ListarU);
     //productos
     router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
     //router.get('/producto/crear', ValidarToken, producto.ListarCategorias);          //debo mostrar las categorias de los productos para que el forntend pueda ponerlos en un combo box 
@@ -43,10 +43,10 @@ module.exports = function (router) {
     function ValidarToken(req, res, next) {
 
         const cabecera = req.headers['token'];
-        console.log("el token es: " + cabecera);
+        console.log('el token es: ' + cabecera);
         if (typeof cabecera !== 'undefined') {
             //quitamos la palabra bearer 
-            const portador = cabecera.split(" ");
+            const portador = cabecera.split(' ');
             const token = cabecera;
             req.token = token;
 
@@ -55,7 +55,7 @@ module.exports = function (router) {
                 if(err){
                     res.json({
                         status: 403,
-                        mensaje: "no es administrador"
+                        mensaje: 'no es administrador'
                     
                     });
                 }else{
@@ -69,8 +69,8 @@ module.exports = function (router) {
             res.json({
                 //no permitido
                 status: 403,
-                mesanje: "no permitido"
-            })
+                mesanje: 'no permitido'
+            });
         }
     }
     
@@ -78,17 +78,17 @@ module.exports = function (router) {
 
         //verifico si ya trae un token si no si se permite el acceso a login de lo contrario 
         const cabecera = req.headers['token'];
-        console.log("el token es: " + cabecera);
+        console.log('el token es: ' + cabecera);
         if (typeof cabecera !== 'undefined') {
 
             res.json({
                 //no permitido
                 status: 403,
-                mesanje: "ya tiene sesion iniciada."
-            })
+                mesanje: 'ya tiene sesion iniciada.'
+            });
 
         } else {
             next();
         }
     }
-}
+};
