@@ -1,7 +1,7 @@
 'use strict';
 
 
-const producto = {}
+const sucursal = {}
 
 sucursal.Crear = async (req, res) => {
     const sucursal = {
@@ -12,12 +12,12 @@ sucursal.Crear = async (req, res) => {
     //insert
     res.json({
         status: "200",
-        mensaje: "se creo el producto."
+        mensaje: "se creo la sucursal."
     });
 }
 sucursal.Editar = async (req, res) => {
-    const id_producto = req.params.id;
-    const product = {
+    const id_sucursal = req.params.id;
+    const sucursal = {
         nombre: req.body.nombre,
         direccion: req.body.direccion,
         numero: req.body.numero
