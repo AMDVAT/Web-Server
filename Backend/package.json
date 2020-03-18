@@ -41,5 +41,8 @@
                 "main": "require"
             }
         }
-    }
+    },
+    "engines": {
+        "node": "8.x"
+      }
 }
