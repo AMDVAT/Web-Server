@@ -108,4 +108,9 @@ producto.top6MasBuscado = async (req, res) => {
     //listar productos top 6 d elos departamentos
     res.json( /*resultado de la consulta*/ );
 }
+producto.reserva = async (req,res) => {
+    const { id_producto, id_usuario } = req.body;
+
+    //insercion a la reservacion pero no se que tabla xd
+}
 module.exports = producto;

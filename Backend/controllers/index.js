@@ -36,6 +36,7 @@ module.exports = function (router) {
     router.get('/producto/masVendido', producto.masVendido);
     router.get('/producto/top6Departamento', producto.top6Departamento);
     router.get('/producto/top6MasBuscado', producto.top6MasBuscado);
+    router.post('/producto/reserva', producto.reserva);
 
 
 
