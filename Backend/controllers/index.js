@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const usuario = require('./usuario');
 const producto = require('./producto');
+const sucursal = require('./sucursal');
 
 module.exports = function (router) {
 
@@ -21,11 +22,15 @@ module.exports = function (router) {
     router.get('/udsuario/listar', usuario.ListarU);
     //productos
     router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
-    //router.get('/producto/crear', ValidarToken, producto.ListarCategorias);          //debo mostrar las categorias de los productos para que el forntend pueda ponerlos en un combo box 
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);
-    router.post('/producto/crearCategoria'),ValidarToken,producto.crearCategoria
+    router.post('/producto/crearCategoria'), ValidarToken, producto.crearCategoria
+    //sucursales
+    router.post('/sucursal/crear', ValidarToken, sucursal.Crear);          //validar token de administrador
+    router.put('/sucursal/editar/:id', ValidarToken, sucursal.Editar);
+    router.delete('/sucursal/eliminar/:id', ValidarToken, sucursal.Eliminar);
+    router.get('/sucursal/listar', LoginExistente, sucursal.Listar);
 
     //vistas de productos
     router.get('/producto/listaCategorias', producto.ListaCategorias);
@@ -53,19 +58,19 @@ module.exports = function (router) {
             req.token = token;
 
             /* verificar que el token de un administrador este haciendo la peticion */
-            jwt.verify(req.token,'@administrador123@', (err,data) =>{
-                if(err){
+            jwt.verify(req.token, '@administrador123@', (err, data) => {
+                if (err) {
                     res.json({
                         status: 403,
                         mensaje: 'no es administrador'
-                    
+
                     });
-                }else{
+                } else {
                     console.log(data);
                     next();
                 }
             });
-            
+
         } else {
             //no existe token
             res.json({
@@ -75,7 +80,7 @@ module.exports = function (router) {
             });
         }
     }
-    
+
     function LoginExistente(req, res, next) {
 
         //verifico si ya trae un token si no si se permite el acceso a login de lo contrario 

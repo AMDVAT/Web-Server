@@ -28,7 +28,7 @@ producto.CrearP = async (req, res) => {
         precio_oferta: req.body.precio_oferta,
         foto: req.body.foto,
         calificacion: req.body.calificacion,
-        categoria_id_categoria: req.body.categoria              
+        categoria_id_categoria: req.body.categoria
     }
     //console.log('entro00000');
     console.log(product);
@@ -47,7 +47,7 @@ producto.EditarP = async (req, res) => {
         precio_oferta: req.body.precio_oferta,
         foto: req.body.foto,
         calificacion: req.body.calificacion,
-        categoria_id_categoria: req.body.categoria             
+        categoria_id_categoria: req.body.categoria
     }
 
     //editar producto con el id especificado
@@ -101,14 +101,14 @@ producto.masVendido = async (req, res) => {
 producto.top6Departamento = async (req, res) => {
 
     //listar productos top 6 d elos departamentos
-    res.json( /*resultado de la consulta*/ );
+    res.json( /*resultado de la consulta*/);
 }
 producto.top6MasBuscado = async (req, res) => {
 
     //listar productos top 6 d elos departamentos
-    res.json( /*resultado de la consulta*/ );
+    res.json( /*resultado de la consulta*/);
 }
-producto.reserva = async (req,res) => {
+producto.reserva = async (req, res) => {
     const { id_producto, id_usuario } = req.body;
 
     //insercion a la reservacion pero no se que tabla xd
