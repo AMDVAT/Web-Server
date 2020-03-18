@@ -72,6 +72,7 @@ CREATE TABLE usuario (
     apellido       VARCHAR(30) NOT NULL,
     email          VARCHAR(25) NOT NULL,
     password       VARCHAR(20) NOT NULL,
+    estado         INTEGER NOT NULL,
     tipo_usuario   INTEGER NOT NULL
 );
 
