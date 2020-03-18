@@ -4,7 +4,7 @@ USE AMDVAT;
 
 CREATE TABLE categoria (
     id_categoria             INTEGER NOT NULL,
-    nombre                   VARCHAR2(30),
+    nombre                   VARCHAR(30),
     categoria_id_categoria   INTEGER
 );
 
@@ -29,11 +29,11 @@ ALTER TABLE detalle_compra ADD CONSTRAINT detalle_compra_pk PRIMARY KEY ( id_det
 
 CREATE TABLE producto (
     id_producto              INTEGER NOT NULL,
-    nombre                   VARCHAR2(30),
-    descripcion              VARCHAR2(50),
-    precio                   NUMBER,
-    ofertado                 NUMBER,
-    precio_oferta            NUMBER,
+    nombre                   VARCHAR(30),
+    descripcion              VARCHAR(50),
+    precio                   INTEGER,
+    ofertado                 INTEGER,
+    precio_oferta            INTEGER,
     categoria_id_categoria   INTEGER NOT NULL
 );
 
@@ -41,7 +41,7 @@ ALTER TABLE producto ADD CONSTRAINT producto_pk PRIMARY KEY ( id_producto );
 
 CREATE TABLE reseña (
     id_reseña              INTEGER NOT NULL,
-    comentario             VARCHAR2(100),
+    comentario             VARCHAR(100),
     valoracion             INTEGER,
     usuario_id_usuario     INTEGER NOT NULL,
     producto_id_producto   INTEGER NOT NULL
@@ -60,8 +60,8 @@ ALTER TABLE stock ADD CONSTRAINT stock_pk PRIMARY KEY ( sucursal_id_sucursal,
 
 CREATE TABLE sucursal (
     id_sucursal   INTEGER NOT NULL,
-    nombre        VARCHAR2(30),
-    direccion     VARCHAR2(60),
+    nombre        VARCHAR(30),
+    direccion     VARCHAR(60),
     numero        INTEGER
 );
 
@@ -69,18 +69,18 @@ ALTER TABLE sucursal ADD CONSTRAINT sucursal_pk PRIMARY KEY ( id_sucursal );
 
 CREATE TABLE tipo_usuario (
     id_tipousuario   INTEGER NOT NULL,
-    nombre           VARCHAR2(20)
+    nombre           VARCHAR(20)
 );
 
 ALTER TABLE tipo_usuario ADD CONSTRAINT tipo_usuario_pk PRIMARY KEY ( id_tipousuario );
 
 CREATE TABLE usuario (
     id_usuario     INTEGER NOT NULL,
-    nombre         VARCHAR2(30),
-    apellido       VARCHAR2(30),
-    email          VARCHAR2(25),
-    password       VARCHAR2(20),
-    direccion      VARCHAR2(30),
+    nombre         VARCHAR(30),
+    apellido       VARCHAR(30),
+    email          VARCHAR(25),
+    password       VARCHAR(20),
+    direccion      VARCHAR(30),
     telefono       INTEGER,
     tipo_usuario   INTEGER NOT NULL
 );
