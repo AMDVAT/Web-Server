@@ -18,7 +18,7 @@ module.exports = function (router) {
     router.post('/usuario/registrar', LoginExistente, usuario.Registrar);
     router.put('/usuario/editar/:id', ValidarToken, usuario.EditarU);
     router.delete('/usuario/eliminar/:id', ValidarToken, usuario.EliminarU);
-    router.get('/udsuario/listar', usuario.ListarU);
+    router.get('/udsuario/listar', LoginExistente, usuario.ListarU);
     //productos
     router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
     //router.get('/producto/crear', ValidarToken, producto.ListarCategorias);          //debo mostrar las categorias de los productos para que el forntend pueda ponerlos en un combo box 
@@ -51,19 +51,19 @@ module.exports = function (router) {
             req.token = token;
 
             /* verificar que el token de un administrador este haciendo la peticion */
-            jwt.verify(req.token,'@administrador123@', (err,data) =>{
-                if(err){
+            jwt.verify(req.token, '@administrador123@', (err, data) => {
+                if (err) {
                     res.json({
                         status: 403,
                         mensaje: 'no es administrador'
-                    
+
                     });
-                }else{
+                } else {
                     console.log(data);
                     next();
                 }
             });
-            
+
         } else {
             //no existe token
             res.json({
@@ -73,7 +73,7 @@ module.exports = function (router) {
             });
         }
     }
-    
+
     function LoginExistente(req, res, next) {
 
         //verifico si ya trae un token si no si se permite el acceso a login de lo contrario 
