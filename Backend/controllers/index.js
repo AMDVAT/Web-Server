@@ -25,7 +25,7 @@ module.exports = function (router) {
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);
-    router.post('/producto/crearCategoria'), ValidarToken, producto.crearCategoria
+    router.post('/producto/crearCategoria', ValidarToken, producto.crearCategoria);
     //sucursales
     router.post('/sucursal/crear', ValidarToken, sucursal.Crear);          //validar token de administrador
     router.put('/sucursal/editar/:id', ValidarToken, sucursal.Editar);
