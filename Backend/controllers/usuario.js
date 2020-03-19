@@ -89,22 +89,24 @@ usuario.EditarU = async (req, res) => {
             tipo_usuario: req.body.tipoUs
         };
         const Usuario = req.db.models.usuario;
-        await Usuario.update(usuario, {where: {id_usuario}});
-        res.send('Usuario actualziado.');
+        await Usuario.update(usuario, { where: { id_usuario } });
+        res.send('Usuario actualizado.');
     } catch (error) {
         res.status(500).send('No se pudo completar la solicitud');
     }
 };
 
-usuario.EliminarU = (req, res) => {
-
-    const id_usuario = req.params.id;
-    //eliminar el producto con el id especificado
-    console.log(req.params.id);
-
-    res.json({
-        status: 200
-    });
+usuario.EliminarU = async (req, res) => {
+    try {
+        const id_usuario = req.params.id;
+        const Usuario = req.db.models.usuario;
+        // await Usuario.destroy({ where: { id_usuario } }); // Eliminar registro
+        await Usuario.update({ estado: 0 }, { where: { id_usuario } }); // Eliminado logico
+        res.send('Usuario eliminado.');
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('No se pudo completar la solicitud');
+    }
 };
 
 usuario.ListarU = async (req, res) => {
