@@ -30,7 +30,8 @@ usuario.login = async (req, res) => {
 
                 res.send({
                     token: token,
-                    mensaje: 'usuario'
+                    mensaje: 'usuario',
+                    data
                 });
             }
 
@@ -38,43 +39,42 @@ usuario.login = async (req, res) => {
             res.status(400).send('Credenciales incorrectas');
         }
     } catch (error) {
-        console.log(error)
         res.status(500).send('No se pudo obtener los datos.');
     }
 
 };
 
-usuario.Registrar = (req, res) => {
+usuario.Registrar = async (req, res) => {
 
-    const { nombre } = req.body.nombre;
-
-    const User = {
-
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        email: req.body.email,
-        password: req.body.contrasena,
-        estado: 1,
-        tipo_usuario: req.body.tipoUs
-
-    };
-
-    //insertar usuario a la base de datos
-    var token = {};
-    if (User.tipo_usuario == 1) {   //tipo de usuario administrador
-        token = jwt.sign({ nombre }, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
-            expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
+    try {
+        const { email } = req.body.nombre;
+        const User = {
+            nombre: req.body.nombre,
+            apellido: req.body.apellido,
+            email: req.body.email,
+            password: req.body.contrasena,
+            estado: 1,
+            tipo_usuario: req.body.tipoUs
+        };
+        //insertar usuario a la base de datos
+        const Usuario = req.db.models.usuario;
+        await Usuario.create(User);
+        var token = {};
+        if (User.tipo_usuario == 1) {   //tipo de usuario administrador
+            token = jwt.sign({ email }, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
+                expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
+            });
+        } else {
+            token = jwt.sign({ email }, '@Usuario123@', {          //{nombre}  -  llave -> palabra secreta
+                expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
+            });
+        }
+        res.send({
+            token: token
         });
-    } else {
-        token = jwt.sign({ nombre }, '@Usuario123@', {          //{nombre}  -  llave -> palabra secreta
-            expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
-        });
+    } catch (error) {
+        res.status(500).send('No se pudo completar la solicitud');
     }
-
-    res.json({
-        status: '200',
-        token: token
-    });
 };
 
 usuario.EditarU = (req, res) => {
