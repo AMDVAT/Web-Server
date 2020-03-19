@@ -4,12 +4,31 @@ const jwt = require('jsonwebtoken');
 
 const producto = {}
 
+producto.crearCategoria = async (req, res) => {
+    var categoria = {
+        nombre: req.body.nombre,
+        descripcion: req.nody.descripcion,
+        categoria_id_categoria: req.body.categoria
+    }
+
+    //insert
+
+    res.json({
+        status: "200",
+        mensaje: "se creo la categoria."
+    });
+}
+
 producto.CrearP = async (req, res) => {
     const product = {
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
         precio: req.body.precio,
-        categoria: req.body.categoria               
+        status: req.body.status,
+        precio_oferta: req.body.precio_oferta,
+        foto: req.body.foto,
+        calificacion: req.body.calificacion,
+        categoria_id_categoria: req.body.categoria
     }
     //console.log('entro00000');
     console.log(product);
@@ -19,12 +38,16 @@ producto.CrearP = async (req, res) => {
     });
 }
 producto.EditarP = async (req, res) => {
-    
+    const id_producto = req.params.id;
     const product = {
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
         precio: req.body.precio,
-        categoria: req.body.categoria           
+        status: req.body.status,
+        precio_oferta: req.body.precio_oferta,
+        foto: req.body.foto,
+        calificacion: req.body.calificacion,
+        categoria_id_categoria: req.body.categoria
     }
 
     //editar producto con el id especificado
@@ -78,11 +101,16 @@ producto.masVendido = async (req, res) => {
 producto.top6Departamento = async (req, res) => {
 
     //listar productos top 6 d elos departamentos
-    res.json( /*resultado de la consulta*/ );
+    res.json( /*resultado de la consulta*/);
 }
 producto.top6MasBuscado = async (req, res) => {
 
     //listar productos top 6 d elos departamentos
-    res.json( /*resultado de la consulta*/ );
+    res.json( /*resultado de la consulta*/);
+}
+producto.reserva = async (req, res) => {
+    const { id_producto, id_usuario } = req.body;
+
+    //insercion a la reservacion pero no se que tabla xd
 }
 module.exports = producto;

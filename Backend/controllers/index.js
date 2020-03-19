@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const usuario = require('./usuario');
 const producto = require('./producto');
+const sucursal = require('./sucursal');
 
 module.exports = function (router) {
 
@@ -21,10 +22,15 @@ module.exports = function (router) {
     router.get('/udsuario/listar', LoginExistente, usuario.ListarU);
     //productos
     router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
-    //router.get('/producto/crear', ValidarToken, producto.ListarCategorias);          //debo mostrar las categorias de los productos para que el forntend pueda ponerlos en un combo box 
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);
+    router.post('/producto/crearCategoria'), ValidarToken, producto.crearCategoria
+    //sucursales
+    router.post('/sucursal/crear', ValidarToken, sucursal.Crear);          //validar token de administrador
+    router.put('/sucursal/editar/:id', ValidarToken, sucursal.Editar);
+    router.delete('/sucursal/eliminar/:id', ValidarToken, sucursal.Eliminar);
+    router.get('/sucursal/listar', LoginExistente, sucursal.Listar);
 
     //vistas de productos
     router.get('/producto/listaCategorias', producto.ListaCategorias);
@@ -35,6 +41,7 @@ module.exports = function (router) {
     router.get('/producto/masVendido', producto.masVendido);
     router.get('/producto/top6Departamento', producto.top6Departamento);
     router.get('/producto/top6MasBuscado', producto.top6MasBuscado);
+    router.post('/producto/reserva', producto.reserva);
 
 
 

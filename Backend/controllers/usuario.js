@@ -53,16 +53,15 @@ usuario.Registrar = (req, res) => {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
         email: req.body.email,
-        contrasena: req.body.password,
-        direccion: req.body.direccion,
-        telefono: req.body.telefono,
-        tipoUs: req.body.tipoUs
+        password: req.body.contrasena,
+        estado: 1,
+        tipo_usuario: req.body.tipoUs
 
     };
 
     //insertar usuario a la base de datos
     var token = {};
-    if (User.tipoUs == 1) {   //tipo de usuario administrador
+    if (User.tipo_usuario == 1) {   //tipo de usuario administrador
         token = jwt.sign({ nombre }, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
             expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
         });
@@ -79,15 +78,14 @@ usuario.Registrar = (req, res) => {
 };
 
 usuario.EditarU = (req, res) => {
-
+    const id_usuario = req.params.id;
     const usuario = {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
         email: req.body.email,
-        contrasena: req.body.password,
-        direccion: req.body.direccion,
-        telefono: req.body.telefono,
-        tipoUs: req.body.tipoUs
+        password: req.body.contrasena,
+        estado: 1,
+        tipo_usuario: req.body.tipoUs
     };
 
     //editar usuario con el id especificado
@@ -100,6 +98,7 @@ usuario.EditarU = (req, res) => {
 
 usuario.EliminarU = (req, res) => {
 
+    const id_usuario = req.params.id;
     //eliminar el producto con el id especificado
     console.log(req.params.id);
 
