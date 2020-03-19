@@ -77,23 +77,23 @@ usuario.Registrar = async (req, res) => {
     }
 };
 
-usuario.EditarU = (req, res) => {
-    const id_usuario = req.params.id;
-    const usuario = {
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        email: req.body.email,
-        password: req.body.contrasena,
-        estado: 1,
-        tipo_usuario: req.body.tipoUs
-    };
-
-    //editar usuario con el id especificado
-    console.log(req.params.id);
-
-    res.json({
-        status: 200
-    });
+usuario.EditarU = async (req, res) => {
+    try {
+        const id_usuario = req.params.id;
+        const usuario = {
+            nombre: req.body.nombre,
+            apellido: req.body.apellido,
+            email: req.body.email,
+            password: req.body.contrasena,
+            estado: 1,
+            tipo_usuario: req.body.tipoUs
+        };
+        const Usuario = req.db.models.usuario;
+        await Usuario.update(usuario, {where: {id_usuario}});
+        res.send('Usuario actualziado.');
+    } catch (error) {
+        res.status(500).send('No se pudo completar la solicitud');
+    }
 };
 
 usuario.EliminarU = (req, res) => {
