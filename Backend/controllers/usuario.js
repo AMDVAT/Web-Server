@@ -4,47 +4,44 @@ const jwt = require('jsonwebtoken');
 
 const usuario = {};
 
-usuario.login = (req, res) => {
+usuario.login = async (req, res) => {
+    try {
 
-    const { nombre, contrasena } = req.body;
+        const { email, contrasena } = req.body;
+        //hacemos la consulta a la base de datos o servicio de donde se consumira.
+        const Usuario = req.db.models.usuario;
+        const data = await Usuario.findOne({ where: { email: email || null, password: contrasena || null } });
+        if (data) {      //hacer la busqueda del usuario en la base de datos 
 
-    //hacemos la consulta a la base de datos o servicio de donde se consumira.
-    const usuario = { id: 1, nombre: 'osuna', contrasena: 'osuna123', tipoUs: 1 };   //tipo de usuario 1 administrador
-    //const id = usuario.id;
-    if (nombre === usuario.nombre && contrasena === usuario.contrasena) {      //hacer la busqueda del usuario en la base de datos 
+            var token = {};
+            if (data.tipo_usuario == 1) {                                              //tipo de usuario administrador
+                token = jwt.sign({ email }, '@administrador123@', {                //{id}  - llave -> palabra secreta
+                    expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+                });
 
-        var token = {};
-        if (usuario.tipoUs == 1) {                                              //tipo de usuario administrador
-            token = jwt.sign({ nombre }, '@administrador123@', {                //{id}  - llave -> palabra secreta
-                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
-            });
+                res.send({
+                    token: token,
+                    mensaje: 'administrador'
+                });
+            } else {
+                token = jwt.sign({ email }, '@Usuario123@', {                      //{id}  -  llave -> palabra secreta
+                    expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+                });
 
-            res.json({
-                status: 200,
-                token: token,
-                mensaje: 'administrador'
+                res.send({
+                    token: token,
+                    mensaje: 'usuario'
+                });
+            }
 
-            });
         } else {
-            token = jwt.sign({ nombre }, '@Usuario123@', {                      //{id}  -  llave -> palabra secreta
-                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
-            });
-
-            res.json({
-                status: 200,
-                token: token,
-                mensaje: 'usuario'
-
-            });
+            res.status(400).send('Credenciales incorrectas');
         }
-
-    } else {
-
-        res.json({
-            status: '400',
-            mensaje: 'credenciales incorrectas'
-        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('No se pudo obtener los datos.');
     }
+
 };
 
 usuario.Registrar = (req, res) => {
