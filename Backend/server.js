@@ -6,7 +6,8 @@ var cors = require('cors');
 var express = require('express');
 var morgan = require('morgan');
 var { Sequelize } = require('data-layer');
-let db = 10;
+const bodyParser  = require('body-parser');
+let db = {};
 var server;
 const DB = new Sequelize(process.env.DB_HOST
     , process.env.DB_PORT
@@ -21,8 +22,9 @@ server = http.createServer(app);
 server.listen(process.env.PORT || 8000);
 
 //midlewares 
-app.use(cors({ origin: 'http://localhost:4200' }));    // direccion del frontend
+// app.use(cors({ origin: 'http://localhost:4200' }));    // direccion del frontend
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 // database integration inside modules.
 const dbx = function (req, _, next) { req.db = db; next(); };
