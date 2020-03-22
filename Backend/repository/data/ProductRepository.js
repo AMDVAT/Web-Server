@@ -15,7 +15,7 @@ class ProductRepository {
             response.data = await this.ProductDataRepository.findAll({
                 raw: true,
                 attributes: {
-                    include: [[this.ProductDataRepository.sequelize.col('categoria.nombre'), 'nombre_categoria']]
+                    include: [[this.CategoriaDataRepository.sequelize.col('categoria.nombre'), 'nombre_categoria']]
                 },
                 include: {
                     model: this.CategoriaDataRepository,
@@ -25,7 +25,6 @@ class ProductRepository {
                 order: [['nombre', 'ASC']]
             });
         } catch (error) {
-            console.log(error)
             response.success = false;
             response.message = 'Error al obtener productos, intente mas tarde.'
         }
