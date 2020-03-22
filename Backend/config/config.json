@@ -35,6 +35,9 @@
                     "dev"
                 ]
             }
+        },
+        "multipart": {
+            "enabled": false
         }
     }
 }

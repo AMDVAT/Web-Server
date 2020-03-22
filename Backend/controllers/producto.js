@@ -1,6 +1,16 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).single('imagen_producto');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.envCLOUD_API_SECRET
+});
 
 const producto = {}
 
@@ -20,22 +30,44 @@ producto.crearCategoria = async (req, res) => {
 }
 
 producto.CrearP = async (req, res) => {
-    const product = {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        precio: req.body.precio,
-        status: req.body.status,
-        precio_oferta: req.body.precio_oferta,
-        foto: req.body.foto,
-        calificacion: req.body.calificacion,
-        categoria_id_categoria: req.body.categoria
+    try {
+        upload(req, res, function (err) {
+            if (err) {
+                const response = {
+                    mensaje: 'Ingreso fallido.',
+                    resultado: false,
+                };
+                // An error occurred when uploading
+                res.status(400).send(response);
+            }
+            else {
+                cloudinary.uploader
+                    .upload_stream({ resource_type: 'auto' }, async (error, result) => {
+                        let urlImagen = null;
+                        let mensajeRegistro = null;
+                        if (error) mensajeRegistro = 'El producto se guardo correctamente, pero la imagen no pudo ser almacenada.';
+                        if (result) urlImagen = result.url;
+                        const data = await req.container.resolve('ProductRepository').crearProducto(req.body, { urlImagen });
+                        const { data: producto } = data;
+                        let statusCode = 400;
+                        if(data.success && producto) {
+                            statusCode = 200;
+                            if(!urlImagen) {
+                                data.message = mensajeRegistro;
+                            }
+                        }
+                        res.status(statusCode).send({ mensaje: data.message });
+                    })
+                    .end(req.file.buffer);
+            }
+        });
+    } catch (error) {
+        const response = {
+            mensaje: 'Ingreso fallido.',
+            resultado: false,
+        };
+        res.status(400).send(response);
     }
-    //console.log('entro00000');
-    console.log(product);
-    res.json({
-        status: "200",
-        mensaje: "se creo el producto."
-    });
 }
 producto.EditarP = async (req, res) => {
     const id_producto = req.params.id;
@@ -69,9 +101,9 @@ producto.EliminarP = async (req, res) => {
 producto.ListarP = async (req, res) => {
     try {
         const data = await req.container.resolve('ProductRepository').listarProductos();
-        const { data: usuario } = data;
-        if (data.success && usuario) {
-            res.send(usuario);
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
         }
         else {
             res.status(400).send({ mensaje: data.message });

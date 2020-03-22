@@ -30,6 +30,33 @@ class ProductRepository {
         }
         return response;
     }
+
+    async crearProducto(body, params) {
+        const producto = {
+            nombre: body.nombre,
+            descripcion: body.descripcion,
+            precio: body.precio,
+            precio_oferta: body.precio_oferta,
+            id_categoria: body.id_categoria,
+            foto: params.urlImagen,
+            calificacion: 0,
+            estado: 1,
+        };
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            response.data = await this.ProductDataRepository.create(producto);
+            response.message = 'Producto creado correctamente.'
+        } catch (error) {
+            console.log(error);
+            response.success = false;
+            response.message = 'Error al crear un producto, intente mas tarde.'
+        }
+        return response;
+    }
 }
 
 module.exports = ProductRepository;
