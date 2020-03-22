@@ -38,33 +38,14 @@ usuario.login = async (req, res) => {
 };
 
 usuario.Registrar = async (req, res) => {
-
     try {
-        const { email } = req.body.nombre;
-        const User = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            email: req.body.email,
-            password: req.body.contrasena,
-            estado: 1,
-            tipo_usuario: req.body.tipoUs
-        };
-        //insertar usuario a la base de datos
-        const Usuario = req.db.models.usuario;
-        await Usuario.create(User);
-        var token = {};
-        if (User.tipo_usuario == 1) {   //tipo de usuario administrador
-            token = jwt.sign({ email }, '@administrador123@', {          //{nombre}  - llave -> palabra secreta
-                expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
-            });
-        } else {
-            token = jwt.sign({ email }, '@Usuario123@', {          //{nombre}  -  llave -> palabra secreta
-                expiresIn: 1440                                      //tiempo de expiracion de la clave 24 horas
-            });
+        const data = await req.container.resolve('UserRepository').crearUsuario(req.body);
+        const { data: usuario } = data;
+        let statusCode = 400;
+        if (data.success && usuario) {
+            statusCode = 200;
         }
-        res.send({
-            token: token
-        });
+        res.status(statusCode).send({ mensaje: data.message });
     } catch (error) {
         res.status(500).send('No se pudo completar la solicitud');
     }
