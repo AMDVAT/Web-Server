@@ -15,6 +15,8 @@ class DataBaseRepository {
     }
 
     registrarModeloDatos(modelo) {
+        this.registroModelos.UserTypeDataRepository = asValue(modelo.tipo_usuario);
+        this.registroModelos.UserStatusDataRepository = asValue(modelo.estado_usuario);
         this.registroModelos.UserDataRepository = asValue(modelo.usuario);
         this.registroModelos.ProductDataRepository = asValue(modelo.producto);
         this.registroModelos.CategoriaDataRepository = asValue(modelo.categoria);
