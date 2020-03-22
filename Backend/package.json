@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "backend",
     "author": "Pablo Osuna",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "start": "node ./server.js",
         "dev": "nodemon ./server.js",

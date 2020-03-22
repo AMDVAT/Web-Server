@@ -22,8 +22,8 @@
     "fetchSpec": "2.0.4"
   },
   "_requiredBy": [
-    "/awilix/glob",
     "/concat-stream",
+    "/eslint/glob",
     "/findup-sync/glob",
     "/fstream",
     "/fstream-ignore",
@@ -31,10 +31,7 @@
     "/glob",
     "/grunt-mocha-cli/glob",
     "/mocha/glob",
-    "/read-package-json/glob",
     "/readable-stream",
-    "/rimraf/glob",
-    "/shortstop-handlers/glob",
     "/tape"
   ],
   "_resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
