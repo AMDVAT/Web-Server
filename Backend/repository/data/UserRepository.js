@@ -21,7 +21,7 @@ class UserRepository {
     }
 
     async crearUsuario(body) {
-        const User = {
+        const usuario = {
             nombre: body.nombre,
             apellido: body.apellido,
             email: body.email,
@@ -35,11 +35,36 @@ class UserRepository {
             success: true
         };
         try {
-            response.data = await this.UserDataRepository.create(User);
+            response.data = await this.UserDataRepository.create(usuario);
             response.message = 'Usuario creado correctamente.'
         } catch (error) {
             response.success = false;
             response.message = 'Error al crear un usuario, intente mas tarde.'
+        }
+        return response;
+    }
+
+    async editarUsuario(body, params) {
+        const id_usuario = params.id;
+        const usuario = {
+            nombre: body.nombre,
+            apellido: body.apellido,
+            email: body.email,
+            password: body.contrasena,
+            tipo_usuario: body.tipo_usuario,
+            estado: 1,
+        };
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            response.data = await this.UserDataRepository.update(usuario, { where: { id_usuario } });
+            response.message = 'Usuario actualizado correctamente.'
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al actualizar un usuario, intente mas tarde.'
         }
         return response;
     }

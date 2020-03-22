@@ -53,18 +53,13 @@ usuario.Registrar = async (req, res) => {
 
 usuario.EditarU = async (req, res) => {
     try {
-        const id_usuario = req.params.id;
-        const usuario = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            email: req.body.email,
-            password: req.body.contrasena,
-            estado: 1,
-            tipo_usuario: req.body.tipoUs
-        };
-        const Usuario = req.db.models.usuario;
-        await Usuario.update(usuario, { where: { id_usuario } });
-        res.send('Usuario actualizado.');
+        const data = await req.container.resolve('UserRepository').editarUsuario(req.body, req.params);
+        const { data: usuario } = data;
+        let statusCode = 400;
+        if (data.success && usuario) {
+            statusCode = 200;
+        }
+        res.status(statusCode).send({ mensaje: data.message });
     } catch (error) {
         res.status(500).send('No se pudo completar la solicitud');
     }
