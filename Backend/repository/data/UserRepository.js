@@ -93,7 +93,7 @@ class UserRepository {
             success: true
         };
         try {
-            response.data = await this.UserDataRepository.findAll();
+            response.data = await this.UserDataRepository.findAll({ order: [['nombre', 'ASC'], ['apellido', 'ASC']] });
         } catch (error) {
             response.success = false;
             response.message = 'Error al obtener usuarios, intente mas tarde.'
