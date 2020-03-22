@@ -19,7 +19,7 @@ module.exports = function (router) {
     router.post('/usuario/registrar', LoginExistente, usuario.Registrar);
     router.put('/usuario/editar/:id', ValidarToken, usuario.EditarU);
     router.delete('/usuario/eliminar/:id', ValidarToken, usuario.EliminarU);
-    router.get('/udsuario/listar', LoginExistente, usuario.ListarU);
+    router.get('/usuario/listar', LoginExistente, usuario.ListarU);
     //productos
     router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);

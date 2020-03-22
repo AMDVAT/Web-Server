@@ -81,11 +81,16 @@ usuario.EliminarU = async (req, res) => {
 
 usuario.ListarU = async (req, res) => {
     try {
-        const Usuario = req.db.models.usuario;
-        const data = await Usuario.findAll();
-        res.send(data);
+        const data = await req.container.resolve('UserRepository').listaUsuarios();
+        const { data: usuario } = data;
+        if (data.success && usuario) {
+            res.send(usuario);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
     } catch (error) {
-        res.status(500).send('No se pudo obtener los datos.');
+        res.status(500).send('No se pudo completar la solicitud');
     }
 };
 

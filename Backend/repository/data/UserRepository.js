@@ -85,6 +85,21 @@ class UserRepository {
         }
         return response;
     }
+
+    async listaUsuarios() {
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            response.data = await this.UserDataRepository.findAll();
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al obtener usuarios, intente mas tarde.'
+        }
+        return response;
+    }
 }
 
 module.exports = UserRepository;
