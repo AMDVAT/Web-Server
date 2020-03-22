@@ -67,9 +67,18 @@ producto.EliminarP = async (req, res) => {
     });
 }
 producto.ListarP = async (req, res) => {
-
-    //arreglos de objetos productos   select *, categoria.Nombre, categoria.id From productos, categoria
-    res.json("productos existentes");
+    try {
+        const data = await req.container.resolve('ProductRepository').listarProductos();
+        const { data: usuario } = data;
+        if (data.success && usuario) {
+            res.send(usuario);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send('No se pudo completar la solicitud');
+    }
 }
 
 producto.ListaCategorias = async (req, res) => {
