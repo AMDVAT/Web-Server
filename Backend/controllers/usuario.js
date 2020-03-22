@@ -6,39 +6,33 @@ const usuario = {};
 
 usuario.login = async (req, res) => {
     try {
-
-        const { email, contrasena } = req.body;
         //hacemos la consulta a la base de datos o servicio de donde se consumira.
-        const data = await req.container.resolve('UserRepository').inicioSesion(email, contrasena);
-        if (data.success) {      //hacer la busqueda del usuario en la base de datos 
-            const { data: usuario } = data;
-            var token = {};
-            if (usuario.tipo_usuario == 1) {                                              //tipo de usuario administrador
-                token = jwt.sign({ email }, '@administrador123@', {                //{id}  - llave -> palabra secreta
-                    expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
-                });
-
-                res.send({
-                    token: token,
-                    mensaje: 'administrador'
-                });
+        const data = await req.container.resolve('UserRepository').inicioSesion(req.body);
+        const { data: usuario } = data;
+        if (data.success && usuario) {      //hacer la busqueda del usuario en la base de datos 
+            let keyToken = null;
+            let mensaje = null;
+            if (usuario.tipo_usuario == 1) {
+                mensaje = 'administrador';                                         //tipo de usuario administrador
+                keyToken = '@administrador123@';
             } else {
-                token = jwt.sign({ email }, '@Usuario123@', {                      //{id}  -  llave -> palabra secreta
-                    expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
-                });
-
-                res.send({
-                    token: token,
-                    mensaje: 'usuario',
-                });
+                mensaje = 'usuario';
+                keyToken = '@Usuario123@';
             }
-
+            const token = jwt.sign({ email: usuario.email, tipoUsuario: usuario.tipo_usuario }
+                , keyToken, {                                                    //{id}  -  llave -> palabra secreta
+                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+            });
+            res.send({
+                token: token,
+                mensaje: mensaje
+            });
         } else {
-            res.status(400).send({ mensaje: 'Credenciales incorrectas'});
+            res.status(400).send({ mensaje: 'Credenciales incorrectas' });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send({ mensaje: 'No se pudo obtener los datos.'});
+        res.status(500).send({ mensaje: 'No se pudo obtener los datos.' });
     }
 
 };
