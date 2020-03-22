@@ -47,7 +47,7 @@ usuario.Registrar = async (req, res) => {
         }
         res.status(statusCode).send({ mensaje: data.message });
     } catch (error) {
-        res.status(500).send('No se pudo completar la solicitud');
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 };
 
@@ -61,7 +61,7 @@ usuario.EditarU = async (req, res) => {
         }
         res.status(statusCode).send({ mensaje: data.message });
     } catch (error) {
-        res.status(500).send('No se pudo completar la solicitud');
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 };
 
@@ -75,7 +75,7 @@ usuario.EliminarU = async (req, res) => {
         }
         res.status(statusCode).send({ mensaje: data.message });
     } catch (error) {
-        res.status(500).send('No se pudo completar la solicitud');
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 };
 
@@ -90,7 +90,7 @@ usuario.ListarU = async (req, res) => {
             res.status(400).send({ mensaje: data.message });
         }
     } catch (error) {
-        res.status(500).send('No se pudo completar la solicitud');
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 };
 

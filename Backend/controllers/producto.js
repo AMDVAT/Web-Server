@@ -62,41 +62,34 @@ producto.CrearP = async (req, res) => {
             }
         });
     } catch (error) {
-        const response = {
-            mensaje: 'Ingreso fallido.',
-            resultado: false,
-        };
-        res.status(400).send(response);
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 }
 producto.EditarP = async (req, res) => {
-    const id_producto = req.params.id;
-    const product = {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        precio: req.body.precio,
-        status: req.body.status,
-        precio_oferta: req.body.precio_oferta,
-        foto: req.body.foto,
-        calificacion: req.body.calificacion,
-        categoria_id_categoria: req.body.categoria
+    try {
+        const data = await req.container.resolve('ProductRepository').editarProducto(req.body, req.params);
+        const { data: producto } = data;
+        let statusCode = 400;
+        if (data.success && producto) {
+            statusCode = 200;
+        }
+        res.status(statusCode).send({ mensaje: data.message });
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
-
-    //editar producto con el id especificado
-    console.log(req.params.id);
-
-    res.json({
-        status: 200
-    });
 }
 producto.EliminarP = async (req, res) => {
-
-    //eliminar el producto con el id especificado
-    console.log(req.params.id);
-
-    res.json({
-        status: 200
-    });
+    try {
+        const data = await req.container.resolve('ProductRepository').eliminarProducto(req.params);
+        const { data: producto } = data;
+        let statusCode = 400;
+        if (data.success && producto) {
+            statusCode = 200;
+        }
+        res.status(statusCode).send({ mensaje: data.message });
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
 }
 producto.ListarP = async (req, res) => {
     try {
@@ -109,7 +102,7 @@ producto.ListarP = async (req, res) => {
             res.status(400).send({ mensaje: data.message });
         }
     } catch (error) {
-        res.status(500).send('No se pudo completar la solicitud');
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 }
 

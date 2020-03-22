@@ -117,7 +117,7 @@ class UserRepository {
             response.message = 'Usuario eliminado correctamente.'
         } catch (error) {
             response.success = false;
-            response.message = 'Error al eliminar un usuario, intente mas tarde.'
+            response.message = 'Error al eliminar el usuario, intente mas tarde.'
         }
         return response;
     }

@@ -51,9 +51,53 @@ class ProductRepository {
             response.data = await this.ProductDataRepository.create(producto);
             response.message = 'Producto creado correctamente.'
         } catch (error) {
-            console.log(error);
             response.success = false;
             response.message = 'Error al crear un producto, intente mas tarde.'
+        }
+        return response;
+    }
+
+    async editarProducto(body, params) {
+        const id_producto = params.id;
+        const producto = {
+            nombre: body.nombre,
+            descripcion: body.descripcion,
+            precio: body.precio,
+            precio_oferta: body.precio_oferta,
+            id_categoria: body.id_categoria,
+            estado: body.estado,
+        };
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            response.data = await this.ProductDataRepository.update(producto, { where: { id_producto } });
+            response.message = 'Producto actualizado correctamente.'
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al actualizar un producto, intente mas tarde.'
+        }
+        return response;
+    }
+    
+    async eliminarProducto(params) {
+        const id_producto = params.id;
+        const producto = {
+            estado: 2,
+        };
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            response.data = await this.ProductDataRepository.update(producto, { where: { id_producto } });
+            response.message = 'Producto eliminado correctamente.'
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al eliminar el producto, intente mas tarde.'
         }
         return response;
     }
