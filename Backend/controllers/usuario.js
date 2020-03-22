@@ -9,12 +9,11 @@ usuario.login = async (req, res) => {
 
         const { email, contrasena } = req.body;
         //hacemos la consulta a la base de datos o servicio de donde se consumira.
-        const Usuario = req.db.models.usuario;
-        const data = await Usuario.findOne({ where: { email: email || null, password: contrasena || null } });
-        if (data) {      //hacer la busqueda del usuario en la base de datos 
-
+        const data = await req.container.resolve('UserRepository').inicioSesion(email, contrasena);
+        if (data.success) {      //hacer la busqueda del usuario en la base de datos 
+            const { data: usuario } = data;
             var token = {};
-            if (data.tipo_usuario == 1) {                                              //tipo de usuario administrador
+            if (usuario.tipo_usuario == 1) {                                              //tipo de usuario administrador
                 token = jwt.sign({ email }, '@administrador123@', {                //{id}  - llave -> palabra secreta
                     expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
                 });
@@ -31,15 +30,15 @@ usuario.login = async (req, res) => {
                 res.send({
                     token: token,
                     mensaje: 'usuario',
-                    data
                 });
             }
 
         } else {
-            res.status(400).send('Credenciales incorrectas');
+            res.status(400).send({ mensaje: 'Credenciales incorrectas'});
         }
     } catch (error) {
-        res.status(500).send('No se pudo obtener los datos.');
+        console.log(error);
+        res.status(500).send({ mensaje: 'No se pudo obtener los datos.'});
     }
 
 };
