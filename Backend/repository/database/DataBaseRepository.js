@@ -14,8 +14,10 @@ class DataBaseRepository {
         this.password = password;
     }
 
-    registrarModeloDatos(modelos) {
-        this.registroModelos.UserDataRepository = asValue(modelos.usuario);
+    registrarModeloDatos(modelo) {
+        this.registroModelos.UserDataRepository = asValue(modelo.usuario);
+        this.registroModelos.ProductDataRepository = asValue(modelo.producto);
+        this.registroModelos.CategoriaDataRepository = asValue(modelo.categoria);
     }
 
     crearConexion() {
