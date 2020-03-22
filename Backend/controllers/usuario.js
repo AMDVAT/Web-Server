@@ -56,7 +56,7 @@ usuario.EditarU = async (req, res) => {
         const data = await req.container.resolve('UserRepository').editarUsuario(req.body, req.params);
         const { data: usuario } = data;
         let statusCode = 400;
-        if (data.success && usuario) {
+        if (data.success && usuario) { // usuario.email
             statusCode = 200;
         }
         res.status(statusCode).send({ mensaje: data.message });
@@ -67,13 +67,14 @@ usuario.EditarU = async (req, res) => {
 
 usuario.EliminarU = async (req, res) => {
     try {
-        const id_usuario = req.params.id;
-        const Usuario = req.db.models.usuario;
-        // await Usuario.destroy({ where: { id_usuario } }); // Eliminar registro
-        await Usuario.update({ estado: 0 }, { where: { id_usuario } }); // Eliminado logico
-        res.send('Usuario eliminado.');
+        const data = await req.container.resolve('UserRepository').eliminarUsuario(req.params);
+        const { data: usuario } = data;
+        let statusCode = 400;
+        if (data.success && usuario) { // usuario.email
+            statusCode = 200;
+        }
+        res.status(statusCode).send({ mensaje: data.message });
     } catch (error) {
-        console.log(error)
         res.status(500).send('No se pudo completar la solicitud');
     }
 };

@@ -68,6 +68,23 @@ class UserRepository {
         }
         return response;
     }
+
+    async eliminarUsuario(params) {
+        const id_usuario = params.id;
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            response.data = await this.UserDataRepository.update({ estado: 2 }, { where: { id_usuario } });
+            response.message = 'Usuario eliminado correctamente.'
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al eliminar un usuario, intente mas tarde.'
+        }
+        return response;
+    }
 }
 
 module.exports = UserRepository;
