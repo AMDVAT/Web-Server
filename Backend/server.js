@@ -3,7 +3,6 @@ require('dotenv').config();
 var app = require('./index');
 var http = require('http');
 var cors = require('cors');
-var express = require('express');
 var morgan = require('morgan');
 const bodyParser = require('body-parser');
 const container = require('./repository/container/registroServicios');

@@ -21,8 +21,8 @@ usuario.login = async (req, res) => {
             }
             const token = jwt.sign({ email: usuario.email, tipoUsuario: usuario.tipo_usuario }
                 , keyToken, {                                                    //{id}  -  llave -> palabra secreta
-                expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
-            });
+                    expiresIn: 1440                                                 //tiempo de expiracion de la clave 24 horas
+                });
             res.send({
                 token: token,
                 mensaje: mensaje

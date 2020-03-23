@@ -33,11 +33,11 @@ module.exports = function (router) {
     router.get('/sucursal/listar', LoginExistente, sucursal.Listar);
 
     //vistas de productos
+    router.get('/producto/buscar', producto.buscarProducto);
+    router.get('/producto/topProductos', producto.topProductos);
+    router.get('/producto/topCategorias', producto.topCategorias);
     router.get('/producto/listaCategorias', producto.ListaCategorias);
-    router.get('/producto/buscar/:categoria', producto.buscarCategoria);
-    router.get('/producto/buscar/:nombre', producto.buscarNombre);
     router.get('/producto/recienIngreso', producto.recienIngreso);
-    router.get('/producto/masVendido', producto.masVendido);
     router.get('/producto/masVendido', producto.masVendido);
     router.get('/producto/top6Departamento', producto.top6Departamento);
     router.get('/producto/top6MasBuscado', producto.top6MasBuscado);
@@ -48,12 +48,11 @@ module.exports = function (router) {
 
 
     function ValidarToken(req, res, next) {
-
         const cabecera = req.headers['token'];
         console.log('el token es: ' + cabecera);
         if (typeof cabecera !== 'undefined') {
             //quitamos la palabra bearer 
-            const portador = cabecera.split(' ');
+            // const portador = cabecera.split(' ');
             const token = cabecera;
             req.token = token;
 
