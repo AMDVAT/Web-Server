@@ -103,14 +103,14 @@ class ProductRepository {
     }
 
     async buscarProducto(query) {
-        const { nombre, id_categoria } = query;
+        const { nombre, id_producto, id_categoria } = query;
         const response = {
             data: null,
             message: null,
             success: true
         };
         // definicion de parametros de busqueda
-        if (!nombre && !id_categoria) {
+        if (!nombre && !id_categoria && !id_producto) {
             response.success = false;
             response.message = 'No existen parametros para poder realizar la busqueda.';
             return response;
@@ -123,6 +123,9 @@ class ProductRepository {
         }
         if (id_categoria) {
             filtroProducto.id_categoria = id_categoria;
+        }
+        if (id_producto) {
+            filtroProducto.id_producto = id_producto;
         }
         try {
             response.data = await this.ProductDataRepository.findAll({
