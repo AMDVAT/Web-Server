@@ -120,9 +120,33 @@ producto.topProductos = async (req, res) => {
 }
 
 producto.ListaCategorias = async (req, res) => {
+    try {
+        const data = await req.container.resolve('CategoryRepository').listarCategorias();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+}
 
-    //listar categorias id,nombre 
-    res.json(/* resultado de la consulta */);
+producto.topCategorias = async (req, res) => {
+    try {
+        const data = await req.container.resolve('CategoryRepository').topCategorias();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
 }
 
 producto.buscarProducto = async (req, res) => {
