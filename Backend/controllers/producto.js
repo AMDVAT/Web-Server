@@ -33,12 +33,7 @@ producto.CrearP = async (req, res) => {
     try {
         upload(req, res, function (err) {
             if (err) {
-                const response = {
-                    mensaje: 'Ingreso fallido.',
-                    resultado: false,
-                };
-                // An error occurred when uploading
-                res.status(400).send(response);
+                res.status(400).send({ mensaje: 'Ingreso fallido.' });
             }
             else {
                 cloudinary.uploader
@@ -97,6 +92,21 @@ producto.EliminarP = async (req, res) => {
 producto.ListarP = async (req, res) => {
     try {
         const data = await req.container.resolve('ProductRepository').listarProductos();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+}
+
+producto.topProductos = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').topProductos();
         const { data: productos } = data;
         if (data.success && productos) {
             res.send(productos);
