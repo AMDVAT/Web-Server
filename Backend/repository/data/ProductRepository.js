@@ -81,7 +81,7 @@ class ProductRepository {
         }
         return response;
     }
-    
+
     async eliminarProducto(params) {
         const id_producto = params.id;
         const producto = {
@@ -94,6 +94,50 @@ class ProductRepository {
         };
         try {
             response.data = await this.ProductDataRepository.update(producto, { where: { id_producto } });
+            response.message = 'Producto eliminado correctamente.'
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al eliminar el producto, intente mas tarde.'
+        }
+        return response;
+    }
+
+    async buscarProducto(query) {
+        const { nombre, id_categoria } = query;
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        // definicion de parametros de busqueda
+        if (!nombre && !id_categoria) {
+            response.success = false;
+            response.message = 'No existen parametros para poder realizar la busqueda.';
+            return response;
+        }
+        const filtroProducto = {};
+        if (nombre) {
+            filtroProducto.nombre = {
+                like: `%${nombre}%`
+            }
+        }
+        if (id_categoria) {
+            filtroProducto.id_categoria = id_categoria;
+        }
+        try {
+            response.data = await this.ProductDataRepository.findAll({
+                raw: true,
+                attributes: {
+                    include: [[this.CategoriaDataRepository.sequelize.col('categoria.nombre'), 'nombre_categoria']]
+                },
+                include: {
+                    model: this.CategoriaDataRepository,
+                    required: true,
+                    attributes: []
+                },
+                order: [['nombre', 'ASC']],
+                where: { ...filtroProducto }
+            });
             response.message = 'Producto eliminado correctamente.'
         } catch (error) {
             response.success = false;

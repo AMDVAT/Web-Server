@@ -65,6 +65,7 @@ producto.CrearP = async (req, res) => {
         res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 }
+
 producto.EditarP = async (req, res) => {
     try {
         const data = await req.container.resolve('ProductRepository').editarProducto(req.body, req.params);
@@ -78,6 +79,7 @@ producto.EditarP = async (req, res) => {
         res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 }
+
 producto.EliminarP = async (req, res) => {
     try {
         const data = await req.container.resolve('ProductRepository').eliminarProducto(req.params);
@@ -91,6 +93,7 @@ producto.EliminarP = async (req, res) => {
         res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 }
+
 producto.ListarP = async (req, res) => {
     try {
         const data = await req.container.resolve('ProductRepository').listarProductos();
@@ -111,16 +114,23 @@ producto.ListaCategorias = async (req, res) => {
     //listar categorias id,nombre 
     res.json(/* resultado de la consulta */);
 }
-producto.buscarCategoria = async (req, res) => {
 
-    //listar productos de categoria especificada en los parametros req.params.categoria
-    res.json(/* resultado de la consulta */);
+producto.buscarProducto = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').buscarProducto(req.query);
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
 }
-producto.buscarNombre = async (req, res) => {
 
-    //listar productos de categoria especificada en los parametros req.params.nombre
-    res.json(/* resultado de la consulta */);
-}
 producto.recienIngreso = async (req, res) => {
 
     //listar productos de recien ingreso
