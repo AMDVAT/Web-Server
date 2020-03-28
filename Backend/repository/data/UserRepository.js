@@ -61,7 +61,7 @@ class UserRepository {
             nombre: body.nombre,
             apellido: body.apellido,
             email: body.email,
-            password: body.contrasena,
+            password: body.password,
             tipo_usuario: body.tipo_usuario,
             estado: 1,
         };
@@ -86,7 +86,7 @@ class UserRepository {
             nombre: body.nombre,
             apellido: body.apellido,
             email: body.email,
-            password: body.contrasena,
+            password: body.password,
             tipo_usuario: body.tipo_usuario,
             estado: 1,
         };
