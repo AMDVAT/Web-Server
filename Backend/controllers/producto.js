@@ -1,53 +1,193 @@
 'use strict';
 
-const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).single('imagen_producto');
+const cloudinary = require('cloudinary').v2;
 
-const producto = {}
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.envCLOUD_API_SECRET
+});
 
-producto.CrearP = (req, res) => {
-    const product = {
+const producto = {};
+
+producto.crearCategoria = async (req, res) => {
+    var categoria = {
         nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        precio: req.body.precio,
-        categoria: req.body.categoria               
+        descripcion: req.nody.descripcion,
+        categoria_id_categoria: req.body.categoria
+    };
+
+    //insert
+
+    res.json({
+        status: '200',
+        mensaje: 'se creo la categoria.'
+    });
+};
+
+producto.CrearP = async (req, res) => {
+    try {
+        upload(req, res, function (err) {
+            if (err) {
+                res.status(400).send({ mensaje: 'Ingreso fallido.' });
+            }
+            else {
+                cloudinary.uploader
+                    .upload_stream({ resource_type: 'auto' }, async (error, result) => {
+                        let urlImagen = null;
+                        let mensajeRegistro = null;
+                        if (error) mensajeRegistro = 'El producto se guardo correctamente, pero la imagen no pudo ser almacenada.';
+                        if (result) urlImagen = result.url;
+                        const data = await req.container.resolve('ProductRepository').crearProducto(req.body, { urlImagen });
+                        const { data: producto } = data;
+                        let statusCode = 400;
+                        if(data.success && producto) {
+                            statusCode = 200;
+                            if(!urlImagen) {
+                                data.message = mensajeRegistro;
+                            }
+                        }
+                        res.status(statusCode).send({ mensaje: data.message });
+                    })
+                    .end(req.file.buffer);
+            }
+        });
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
-    //console.log('entro00000');
-    console.log(product);
-    res.json({
-        status: "200",
-        mensaje: "se creo el producto."
-    });
-}
-producto.EditarP = (req, res) => {
-    
-    const product = {
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        precio: req.body.precio,
-        categoria: req.body.categoria           
+};
+
+producto.EditarP = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').editarProducto(req.body, req.params);
+        const { data: producto } = data;
+        let statusCode = 400;
+        if (data.success && producto) {
+            statusCode = 200;
+        }
+        res.status(statusCode).send({ mensaje: data.message });
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
+};
 
-    //editar producto con el id especificado
-    console.log(req.params.id);
+producto.EliminarP = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').eliminarProducto(req.params);
+        const { data: producto } = data;
+        let statusCode = 400;
+        if (data.success && producto) {
+            statusCode = 200;
+        }
+        res.status(statusCode).send({ mensaje: data.message });
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+};
 
-    res.json({
-        status: 200
-    });
-}
-producto.EliminarP = (req, res) => {
+producto.ListarP = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').listarProductos();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+};
 
-    //eliminar el producto con el id especificado
-    console.log(req.params.id);
+producto.topProductos = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').topProductos();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+};
 
-    res.json({
-        status: 200
-    });
-}
-producto.ListarP = (req, res) => {
+producto.ListaCategorias = async (req, res) => {
+    try {
+        const data = await req.container.resolve('CategoryRepository').listarCategorias();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+};
 
-    //arreglos de objetos productos   select *, categoria.Nombre, categoria.id From productos, categoria
-    res.send("productos existentes");
-}
+producto.topCategorias = async (req, res) => {
+    try {
+        const data = await req.container.resolve('CategoryRepository').topCategorias();
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+};
 
+producto.buscarProducto = async (req, res) => {
+    try {
+        const data = await req.container.resolve('ProductRepository').buscarProducto(req.query);
+        const { data: productos } = data;
+        if (data.success && productos) {
+            res.send(productos);
+        }
+        else {
+            res.status(400).send({ mensaje: data.message });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
+    }
+};
 
+producto.recienIngreso = async (req, res) => {
+
+    //listar productos de recien ingreso
+    res.json(/* resultado de la consulta */);
+};
+producto.masVendido = async (req, res) => {
+
+    //listar productos mas vendiddos
+    res.json(/* resultado de la consulta */);
+};
+
+producto.top6Departamento = async (req, res) => {
+
+    //listar productos top 6 d elos departamentos
+    res.json( /*resultado de la consulta*/);
+};
+producto.top6MasBuscado = async (req, res) => {
+
+    //listar productos top 6 d elos departamentos
+    res.json( /*resultado de la consulta*/);
+};
+producto.reserva = async (req, res) => {
+    const { id_producto, id_usuario } = req.body;
+
+    //insercion a la reservacion pero no se que tabla xd
+};
 module.exports = producto;

@@ -18,7 +18,11 @@
         ],
         "no-console": 1
     },
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
     "env": {
+        "es6": true,
         "node": true,
         "browser": true,
         "mocha": true

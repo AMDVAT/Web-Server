@@ -3,7 +3,6 @@
 module.exports = function IndexModel() {
     return {
         name: 'index',
-        appelido: 'asas',
-        
+        appelido: 'asas'
     };
 };

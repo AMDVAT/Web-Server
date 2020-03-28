@@ -1,27 +1,33 @@
 {
-  "_from": "underscore@~1.7.0",
+  "_args": [
+    [
+      "underscore@1.7.0",
+      "/Users/carloscordon/Documents/Personal/Web-Server/Backend"
+    ]
+  ],
+  "_development": true,
+  "_from": "underscore@1.7.0",
   "_id": "underscore@1.7.0",
   "_inBundle": false,
   "_integrity": "sha1-a7rwh3UA02vjTsqlhODbn+8DUgk=",
   "_location": "/underscore",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "underscore@~1.7.0",
+    "raw": "underscore@1.7.0",
     "name": "underscore",
     "escapedName": "underscore",
-    "rawSpec": "~1.7.0",
+    "rawSpec": "1.7.0",
     "saveSpec": null,
-    "fetchSpec": "~1.7.0"
+    "fetchSpec": "1.7.0"
   },
   "_requiredBy": [
     "/grunt/argparse"
   ],
   "_resolved": "https://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz",
-  "_shasum": "6bbaf0877500d36be34ecaa584e0db9fef035209",
-  "_spec": "underscore@~1.7.0",
-  "_where": "C:\\Users\\juanp\\OneDrive\\Escritorio\\clases\\Analisis y Diseño 1\\ProyectoClase\\Backend\\node_modules\\grunt\\node_modules\\argparse",
+  "_spec": "1.7.0",
+  "_where": "/Users/carloscordon/Documents/Personal/Web-Server/Backend",
   "author": {
     "name": "Jeremy Ashkenas",
     "email": "jeremy@documentcloud.org"
@@ -29,7 +35,6 @@
   "bugs": {
     "url": "https://github.com/jashkenas/underscore/issues"
   },
-  "deprecated": false,
   "description": "JavaScript's functional programming helper library.",
   "devDependencies": {
     "docco": "0.6.x",
@@ -70,5 +75,5 @@
   "version": "1.7.0",
   "readme": "                       __\n                      /\\ \\                                                         __\n     __  __    ___    \\_\\ \\     __   _ __   ____    ___    ___   _ __    __       /\\_\\    ____\n    /\\ \\/\\ \\ /' _ `\\  /'_  \\  /'__`\\/\\  __\\/ ,__\\  / ___\\ / __`\\/\\  __\\/'__`\\     \\/\\ \\  /',__\\\n    \\ \\ \\_\\ \\/\\ \\/\\ \\/\\ \\ \\ \\/\\  __/\\ \\ \\//\\__, `\\/\\ \\__//\\ \\ \\ \\ \\ \\//\\  __/  __  \\ \\ \\/\\__, `\\\n     \\ \\____/\\ \\_\\ \\_\\ \\___,_\\ \\____\\\\ \\_\\\\/\\____/\\ \\____\\ \\____/\\ \\_\\\\ \\____\\/\\_\\ _\\ \\ \\/\\____/\n      \\/___/  \\/_/\\/_/\\/__,_ /\\/____/ \\/_/ \\/___/  \\/____/\\/___/  \\/_/ \\/____/\\/_//\\ \\_\\ \\/___/\n                                                                                  \\ \\____/\n                                                                                   \\/___/\n\nUnderscore.js is a utility-belt library for JavaScript that provides\nsupport for the usual functional suspects (each, map, reduce, filter...)\nwithout extending any core JavaScript objects.\n\nFor Docs, License, Tests, and pre-packed downloads, see:\nhttp://underscorejs.org\n\nUnderscore is an open-sourced component of DocumentCloud:\nhttps://github.com/documentcloud\n\nMany thanks to our contributors:\nhttps://github.com/jashkenas/underscore/contributors\n",
   "readmeFilename": "README.md",
-  "location": "components\\underscore"
+  "location": "components/underscore"
 }
