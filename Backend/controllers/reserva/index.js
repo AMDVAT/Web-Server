@@ -13,7 +13,7 @@ module.exports = (router) => {
             let now= new Date();
             const reserva = {
                 fecha: now,
-                estado: 3, //estado pendiente
+                estado: 3, //estado 'pendiente'
                 id_usuario: id
             }
             //insercion de la reserva 
