@@ -14,7 +14,6 @@ module.exports = function (router) {
     });
 
     //productos
-    router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
     router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
     router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
     router.get('/producto/listar', LoginExistente, producto.ListarP);

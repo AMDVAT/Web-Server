@@ -1,16 +1,5 @@
 'use strict';
 
-const multer = require('multer');
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage }).single('imagen_producto');
-const cloudinary = require('cloudinary').v2;
-
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.CLOUD_API_KEY,
-    api_secret: process.envCLOUD_API_SECRET
-});
-
 const producto = {};
 
 producto.crearCategoria = async (req, res) => {
@@ -26,38 +15,6 @@ producto.crearCategoria = async (req, res) => {
         status: '200',
         mensaje: 'se creo la categoria.'
     });
-};
-
-producto.CrearP = async (req, res) => {
-    try {
-        upload(req, res, function (err) {
-            if (err) {
-                res.status(400).send({ mensaje: 'Ingreso fallido.' });
-            }
-            else {
-                cloudinary.uploader
-                    .upload_stream({ resource_type: 'auto' }, async (error, result) => {
-                        let urlImagen = null;
-                        let mensajeRegistro = null;
-                        if (error) mensajeRegistro = 'El producto se guardo correctamente, pero la imagen no pudo ser almacenada.';
-                        if (result) urlImagen = result.url;
-                        const data = await req.container.resolve('ProductRepository').crearProducto(req.body, { urlImagen });
-                        const { data: producto } = data;
-                        let statusCode = 400;
-                        if(data.success && producto) {
-                            statusCode = 200;
-                            if(!urlImagen) {
-                                data.message = mensajeRegistro;
-                            }
-                        }
-                        res.status(statusCode).send({ mensaje: data.message });
-                    })
-                    .end(req.file.buffer);
-            }
-        });
-    } catch (error) {
-        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
-    }
 };
 
 producto.EditarP = async (req, res) => {
