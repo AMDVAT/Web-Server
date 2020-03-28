@@ -37,6 +37,7 @@ server.on('listening', async function () {
         container.register(db.registroModelos);
     } catch (error) {
         console.error(error);
+        process.exit();
     }
     console.log('Server listening on http://localhost:%d', this.address().port);
 });
