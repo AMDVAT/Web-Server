@@ -2,82 +2,9 @@
 
 const producto = {};
 
-producto.crearCategoria = async (req, res) => {
-    var categoria = {
-        nombre: req.body.nombre,
-        descripcion: req.nody.descripcion,
-        categoria_id_categoria: req.body.categoria
-    };
-
-    //insert
-
-    res.json({
-        status: '200',
-        mensaje: 'se creo la categoria.'
-    });
-};
-
-producto.EditarP = async (req, res) => {
-    try {
-        const data = await req.container.resolve('ProductRepository').editarProducto(req.body, req.params);
-        const { data: producto } = data;
-        let statusCode = 400;
-        if (data.success && producto) {
-            statusCode = 200;
-        }
-        res.status(statusCode).send({ mensaje: data.message });
-    } catch (error) {
-        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
-    }
-};
-
-producto.EliminarP = async (req, res) => {
-    try {
-        const data = await req.container.resolve('ProductRepository').eliminarProducto(req.params);
-        const { data: producto } = data;
-        let statusCode = 400;
-        if (data.success && producto) {
-            statusCode = 200;
-        }
-        res.status(statusCode).send({ mensaje: data.message });
-    } catch (error) {
-        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
-    }
-};
-
-producto.ListarP = async (req, res) => {
-    try {
-        const data = await req.container.resolve('ProductRepository').listarProductos();
-        const { data: productos } = data;
-        if (data.success && productos) {
-            res.send(productos);
-        }
-        else {
-            res.status(400).send({ mensaje: data.message });
-        }
-    } catch (error) {
-        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
-    }
-};
-
 producto.topProductos = async (req, res) => {
     try {
         const data = await req.container.resolve('ProductRepository').topProductos();
-        const { data: productos } = data;
-        if (data.success && productos) {
-            res.send(productos);
-        }
-        else {
-            res.status(400).send({ mensaje: data.message });
-        }
-    } catch (error) {
-        res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
-    }
-};
-
-producto.ListaCategorias = async (req, res) => {
-    try {
-        const data = await req.container.resolve('CategoryRepository').listarCategorias();
         const { data: productos } = data;
         if (data.success && productos) {
             res.send(productos);
@@ -116,7 +43,6 @@ producto.buscarProducto = async (req, res) => {
             res.status(400).send({ mensaje: data.message });
         }
     } catch (error) {
-        console.log(error);
         res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
     }
 };
