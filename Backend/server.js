@@ -17,7 +17,7 @@ server = http.createServer(app);
 server.listen(process.env.PORT || 8000);
 
 //midlewares 
-app.use(cors({ origin: ['http://localhost:4200', 'http://localhost:8100'] }));    // direccion del frontend
+app.use(cors());    // direccion del frontend
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(morgan('dev'));
