@@ -16,6 +16,7 @@ class CategoryRepository {
                 order: [['nombre', 'ASC']],
                 where: { id_categoria }
             });
+            if(!response.data) response.message = 'No se ha podido encontrar el elemento solicitado.';
         } catch (error) {
             response.success = false;
             response.message = 'Error al obtener categorias, intente mas tarde.';
