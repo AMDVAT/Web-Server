@@ -119,7 +119,7 @@ class ProductRepository {
         if (nombre) {
             filtroProducto.nombre = {
                 like: `%${nombre}%`
-            }
+            };
         }
         if (id_categoria) {
             filtroProducto.id_categoria = id_categoria;

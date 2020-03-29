@@ -18,8 +18,10 @@ class UserRepository {
                 raw: true,
                 attributes: {
                     include: [
-                        [this.UserTypeDataRepository.sequelize.col('tipoUsuario.nombre'), 'nombre_tipo_usuario'],
-                        [this.UserStatusDataRepository.sequelize.col('estadoUsuario.nombre'), 'nombre_estado_usuario']
+                        [this.UserTypeDataRepository.sequelize.col('tipoUsuario.nombre')
+                            , 'nombre_tipo_usuario'],
+                        [this.UserStatusDataRepository.sequelize.col('estadoUsuario.nombre')
+                            , 'nombre_estado_usuario']
                     ]
                 },
                 include: [{
@@ -34,7 +36,7 @@ class UserRepository {
                 order: [['nombre', 'ASC'], ['apellido', 'ASC']],
                 where: { id_usuario: id_usuario }
             });
-            if(!response.data) response.message = 'No se ha podido encontrar eliminar el elemento solicitado';
+            if (!response.data) response.message = 'No se ha podido encontrar el elemento solicitado.';
         } catch (error) {
             response.success = false;
             response.message = 'Error al obtener los datos, intente mas tarde.';
@@ -54,8 +56,10 @@ class UserRepository {
                 raw: true,
                 attributes: {
                     include: [
-                        [this.UserTypeDataRepository.sequelize.col('tipoUsuario.nombre'), 'nombre_tipo_usuario'],
-                        [this.UserStatusDataRepository.sequelize.col('estadoUsuario.nombre'), 'nombre_estado_usuario']
+                        [this.UserTypeDataRepository.sequelize.col('tipoUsuario.nombre')
+                            , 'nombre_tipo_usuario'],
+                        [this.UserStatusDataRepository.sequelize.col('estadoUsuario.nombre')
+                            , 'nombre_estado_usuario']
                     ]
                 },
                 include: [{
@@ -71,7 +75,7 @@ class UserRepository {
             });
         } catch (error) {
             response.success = false;
-            response.message = 'Error al obtener usuarios, intente mas tarde.'
+            response.message = 'Error al obtener usuarios, intente mas tarde.';
         }
         return response;
     }
@@ -88,7 +92,7 @@ class UserRepository {
                 .findOne({ where: { email: email || null, password: contrasena || null } });
         } catch (error) {
             response.success = false;
-            response.message = 'Error al realizar la autenticacion, intente mas tarde.'
+            response.message = 'Error al realizar la autenticacion, intente mas tarde.';
         }
         return response;
     }
@@ -109,10 +113,10 @@ class UserRepository {
         };
         try {
             response.data = await this.UserDataRepository.create(usuario);
-            response.message = 'Usuario creado correctamente.'
+            response.message = 'Usuario creado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al crear un usuario, intente mas tarde.'
+            response.message = 'Error al crear un usuario, intente mas tarde.';
         }
         return response;
     }
@@ -134,10 +138,10 @@ class UserRepository {
         };
         try {
             response.data = await this.UserDataRepository.update(usuario, { where: { id_usuario } });
-            response.message = 'Usuario actualizado correctamente.'
+            response.message = 'Usuario actualizado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al actualizar un usuario, intente mas tarde.'
+            response.message = 'Error al actualizar un usuario, intente mas tarde.';
         }
         return response;
     }
@@ -151,10 +155,10 @@ class UserRepository {
         };
         try {
             response.data = await this.UserDataRepository.update({ estado: 2 }, { where: { id_usuario } });
-            response.message = 'Usuario eliminado correctamente.'
+            response.message = 'Usuario eliminado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al eliminar el usuario, intente mas tarde.'
+            response.message = 'Error al eliminar el usuario, intente mas tarde.';
         }
         return response;
     }

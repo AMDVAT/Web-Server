@@ -13,12 +13,6 @@ module.exports = function (router) {
 
     });
 
-    //productos
-    router.post('/producto/crear', ValidarToken, producto.CrearP);          //validar token de administrador
-    router.put('/producto/editar/:id', ValidarToken, producto.EditarP);
-    router.delete('/producto/eliminar/:id', ValidarToken, producto.EliminarP);
-    router.get('/producto/listar', LoginExistente, producto.ListarP);
-    router.post('/producto/crearCategoria', ValidarToken, producto.crearCategoria);
     //sucursales
     router.post('/sucursal/crear', ValidarToken, sucursal.Crear);          //validar token de administrador
     router.put('/sucursal/editar/:id', ValidarToken, sucursal.Editar);
@@ -29,7 +23,6 @@ module.exports = function (router) {
     router.get('/producto/buscar', producto.buscarProducto);
     router.get('/producto/topProductos', producto.topProductos);
     router.get('/producto/topCategorias', producto.topCategorias);
-    router.get('/producto/listaCategorias', producto.ListaCategorias);
     router.get('/producto/recienIngreso', producto.recienIngreso);
     router.get('/producto/masVendido', producto.masVendido);
     router.get('/producto/top6Departamento', producto.top6Departamento);
