@@ -1,5 +1,7 @@
+const validarToken = require('../../src/token/validarToken');
+
 module.exports = (router) => {
-    router.delete('/:id', async (req, res) => {
+    router.delete('/:id',validarToken, async (req, res) => {
         try {
             const data = await req.container.resolve('ProductRepository').eliminarProducto(req.params);
             const { data: producto } = data;

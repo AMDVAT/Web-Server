@@ -1,5 +1,7 @@
+const validarToken = require('../../../src/token/validarToken');
+
 module.exports = (router) => {
-    router.post('/', async (req, res) => {
+    router.post('/', validarToken, async (req, res) => {
         try {
             const data = await req.container.resolve('CategoryRepository').crearCategoria(req.body);
             const { data: categoria } = data;

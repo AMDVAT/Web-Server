@@ -1,5 +1,7 @@
+const validarToken = require('../../src/token/validarToken');
+
 module.exports = (router) => {
-    router.delete('/:id', async (req, res) => {
+    router.delete('/:id', validarToken, async (req, res) => {
         try {
             const data = await req.container.resolve('UserRepository').eliminarUsuario(req.params);
             const { data: usuario } = data;

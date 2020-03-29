@@ -1,5 +1,7 @@
+const validarToken = require('../../src/token/validarToken');
+
 module.exports = (router) => {
-    router.put('/:id', async (req, res) => {
+    router.put('/:id', validarToken, async (req, res) => {
         try {
             const data = await req.container.resolve('UserRepository').editarUsuario(req.body, req.params);
             const { data: usuario } = data;

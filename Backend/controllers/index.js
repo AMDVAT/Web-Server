@@ -20,7 +20,6 @@ module.exports = function (router) {
     router.get('/sucursal/listar', LoginExistente, sucursal.Listar);
 
     //vistas de productos
-    router.get('/producto/buscar', producto.buscarProducto);
     router.get('/producto/topProductos', producto.topProductos);
     router.get('/producto/topCategorias', producto.topCategorias);
     router.get('/producto/recienIngreso', producto.recienIngreso);
@@ -28,10 +27,6 @@ module.exports = function (router) {
     router.get('/producto/top6Departamento', producto.top6Departamento);
     router.get('/producto/top6MasBuscado', producto.top6MasBuscado);
     router.post('/producto/reserva', producto.reserva);
-
-
-
-
 
     function ValidarToken(req, res, next) {
         const cabecera = req.headers['token'];
