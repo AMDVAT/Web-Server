@@ -24,17 +24,19 @@ class CategoryRepository {
         return response;
     }
 
-    async listarCategorias() {
+    async listarCategorias(padre = false) {
         const response = {
             data: null,
             message: null,
             success: true
         };
+        const params = {
+            order: [['nombre', 'ASC']]
+        };
+        if(padre) params.where = { categoria_id_categoria: { is: null} };
         try {
             // Listado de categorias ordenados alfabeticamente
-            response.data = await this.CategoriaDataRepository.findAll({
-                order: [['nombre', 'ASC']]
-            });
+            response.data = await this.CategoriaDataRepository.findAll(params);
         } catch (error) {
             response.success = false;
             response.message = 'Error al obtener categorias, intente mas tarde.';
