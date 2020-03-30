@@ -117,23 +117,18 @@ class UserRepository {
         return response;
     }
 
-    async editarUsuario(body, params) {
-        const id_usuario = params.id;
-        const usuario = {
-            nombre: body.nombre,
-            apellido: body.apellido,
-            email: body.email,
-            password: body.password,
-            tipo_usuario: body.tipo_usuario,
-            estado: 1,
-        };
+    async editarUsuario({ data, params }) {
         const response = {
             data: null,
             message: null,
             success: true
         };
         try {
-            response.data = await this.UserDataRepository.update(usuario, { where: { id_usuario } });
+            response.data = await this.UserDataRepository.update(data, {
+                where: {
+                    id_usuario: params.id_usuario
+                }
+            });
             response.message = 'Usuario actualizado correctamente.';
         } catch (error) {
             response.success = false;
