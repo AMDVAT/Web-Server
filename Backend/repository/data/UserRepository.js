@@ -80,8 +80,7 @@ class UserRepository {
         return response;
     }
 
-    async inicioSesion(body) {
-        const { email, contrasena } = body;
+    async inicioSesion({data}) {
         const response = {
             data: null,
             message: null,
@@ -89,7 +88,7 @@ class UserRepository {
         };
         try {
             response.data = await this.UserDataRepository
-                .findOne({ where: { email: email || null, password: contrasena || null } });
+                .findOne({ where: { ...data } });
         } catch (error) {
             response.success = false;
             response.message = 'Error al realizar la autenticacion, intente mas tarde.';

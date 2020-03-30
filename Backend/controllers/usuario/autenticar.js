@@ -3,8 +3,10 @@ const generarToken = require('../../src/token/generarToken');
 module.exports = (router) => {
 
     router.post('/', async (req, res) => {
+        const entradaInicioSesionUsuario = require('../../src/mapeoObjetos/usuario/entrada/entradaInicioSesionUsuario');
         try {
-            const data = await req.container.resolve('UserRepository').inicioSesion(req.body);
+            const data = await req.container.resolve('UserRepository')
+                .inicioSesion(entradaInicioSesionUsuario(req.body));
             const { data: usuario } = data;
             if (data.success && usuario) {
                 let mensaje = null;
