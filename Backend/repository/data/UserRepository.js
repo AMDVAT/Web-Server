@@ -33,7 +33,7 @@ class UserRepository {
                     required: true,
                     attributes: []
                 }],
-                order: [['nombre', 'ASC'], ['apellido', 'ASC']],
+                // order: [['nombre', 'ASC'], ['apellido', 'ASC']],
                 where: { id_usuario: id_usuario }
             });
             if (!response.data) response.message = 'No se ha podido encontrar el elemento solicitado.';

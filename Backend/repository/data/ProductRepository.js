@@ -141,10 +141,10 @@ class ProductRepository {
                 order: [['nombre', 'ASC']],
                 where: { ...filtroProducto }
             });
-            response.message = 'Producto encontrado correctamente.'
+            response.message = 'Producto encontrado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al buscar el producto, intente mas tarde.'
+            response.message = 'Error al buscar el producto, intente mas tarde.';
         }
         return response;
     }
