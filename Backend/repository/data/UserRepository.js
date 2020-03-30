@@ -80,8 +80,7 @@ class UserRepository {
         return response;
     }
 
-    async inicioSesion(body) {
-        const { email, contrasena } = body;
+    async inicioSesion({data}) {
         const response = {
             data: null,
             message: null,
@@ -89,7 +88,7 @@ class UserRepository {
         };
         try {
             response.data = await this.UserDataRepository
-                .findOne({ where: { email: email || null, password: contrasena || null } });
+                .findOne({ where: { ...data } });
         } catch (error) {
             response.success = false;
             response.message = 'Error al realizar la autenticacion, intente mas tarde.';
@@ -97,13 +96,9 @@ class UserRepository {
         return response;
     }
 
-    async crearUsuario(body) {
+    async crearUsuario({ data }) {
         const usuario = {
-            nombre: body.nombre,
-            apellido: body.apellido,
-            email: body.email,
-            password: body.password,
-            tipo_usuario: body.tipo_usuario,
+            ...data,
             estado: 1,
         };
         const response = {
@@ -121,23 +116,18 @@ class UserRepository {
         return response;
     }
 
-    async editarUsuario(body, params) {
-        const id_usuario = params.id;
-        const usuario = {
-            nombre: body.nombre,
-            apellido: body.apellido,
-            email: body.email,
-            password: body.password,
-            tipo_usuario: body.tipo_usuario,
-            estado: 1,
-        };
+    async editarUsuario({ data, params }) {
         const response = {
             data: null,
             message: null,
             success: true
         };
         try {
-            response.data = await this.UserDataRepository.update(usuario, { where: { id_usuario } });
+            response.data = await this.UserDataRepository.update(data, {
+                where: {
+                    id_usuario: params.id_usuario
+                }
+            });
             response.message = 'Usuario actualizado correctamente.';
         } catch (error) {
             response.success = false;
