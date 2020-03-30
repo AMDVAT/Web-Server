@@ -1,8 +1,8 @@
-module.exports = (cabecera) => {
+module.exports = (token) => {
+    console.log(token.token);
     const jwt = require('jsonwebtoken');
     const keyToken = 'D4Ar51aWbT';
-    const user = jwt.verify(cabecera.cabecera, keyToken, (err, data)  => {
-        return user.id_usuario;
-    });
+    const user = jwt.verify(token.token, keyToken);
+    return user.id_usuario;
 };
 
