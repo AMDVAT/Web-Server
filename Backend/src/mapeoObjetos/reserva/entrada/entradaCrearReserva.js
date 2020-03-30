@@ -3,7 +3,7 @@ module.exports = (req) => {
     let now = new Date();
     const token = req.headers['token'];
     return {
-        reserva: {
+        data: {
             fecha: now,
             estado: 3, //estado 'pendiente'
             id_usuario: consultarToken({ token: token })
