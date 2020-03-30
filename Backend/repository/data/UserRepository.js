@@ -97,13 +97,9 @@ class UserRepository {
         return response;
     }
 
-    async crearUsuario(body) {
+    async crearUsuario({ data }) {
         const usuario = {
-            nombre: body.nombre,
-            apellido: body.apellido,
-            email: body.email,
-            password: body.password,
-            tipo_usuario: body.tipo_usuario,
+            ...data,
             estado: 1,
         };
         const response = {

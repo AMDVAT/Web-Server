@@ -1,7 +1,8 @@
 module.exports = (router) => {
     router.post('/', async (req, res) => {
+        const entradaCrearUsuario = require('../../src/mapeoObjetos/usuario/entrada/entradaCrearUsuario');
         try {
-            const data = await req.container.resolve('UserRepository').crearUsuario(req.body);
+            const data = await req.container.resolve('UserRepository').crearUsuario(entradaCrearUsuario(req.body));
             const { data: usuario } = data;
             let statusCode = 400;
             if (data.success && usuario) {
