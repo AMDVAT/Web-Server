@@ -1,12 +1,12 @@
 const validarToken = require('../../src/token/validarToken');
 
 module.exports = (router) => {
-    router.put('/:id', validarToken, async (req, res) => {
+    router.put('/:id', validarToken,async (req, res) => {
         try {
-            const data = await req.container.resolve('UserRepository').editarUsuario(req.body, req.params);
-            const { data: usuario } = data;
+            const data = await req.container.resolve('ProductRepository').editarProducto(req.body, req.params);
+            const { data: producto } = data;
             let statusCode = 400;
-            if (data.success && usuario) { // usuario.email
+            if (data.success && producto) {
                 statusCode = 200;
             }
             res.status(statusCode).send({ mensaje: data.message });

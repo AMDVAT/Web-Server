@@ -8,14 +8,13 @@ module.exports = function (grunt) {
         configDir: require('path').resolve('tasks')
     });
 
-    
-    
+
+
     // Register group tasks
     grunt.registerTask('build', ['eslint', 'eslint', 'requirejs', 'copyto']);
 
-    grunt.registerTask('test', [ 'eslint', 'mochacli' ]);
+    grunt.registerTask('test', ['eslint', 'mochacli']);
 
-    
-        grunt.registerTask('postinstall', ['copy-browser-modules']);
-    
+    grunt.registerTask('postinstall', ['copy-browser-modules']);
+
 };

@@ -1,12 +1,12 @@
-const validarToken = require('../../src/token/validarToken');
+const validarToken = require('../../../src/token/validarToken');
 
 module.exports = (router) => {
     router.delete('/:id', validarToken, async (req, res) => {
         try {
-            const data = await req.container.resolve('UserRepository').eliminarUsuario(req.params);
-            const { data: usuario } = data;
+            const data = await req.container.resolve('CategoryRepository').eliminarUsuario(req.params);
+            const { data: categoria } = data;
             let statusCode = 400;
-            if (data.success && usuario) { // usuario.email
+            if (data.success && categoria) { // usuario.email
                 statusCode = 200;
             }
             res.status(statusCode).send({ mensaje: data.message });

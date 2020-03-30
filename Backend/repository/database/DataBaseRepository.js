@@ -20,6 +20,7 @@ class DataBaseRepository {
         this.registroModelos.UserDataRepository = asValue(modelo.usuario);
         this.registroModelos.ProductDataRepository = asValue(modelo.producto);
         this.registroModelos.CategoriaDataRepository = asValue(modelo.categoria);
+        this.registroModelos.StoreDataRepository = asValue(modelo.sucursal);
     }
 
     crearConexion() {
