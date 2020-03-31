@@ -16,6 +16,6 @@ module.exports = (req, res, next) => {
         });
     } else {
         //no existe token
-        res.status(403).send({ mensaje: 'Acceso permitido.' });
+        res.status(403).send({ mensaje: 'Acceso no permitido.' });
     }
 };
