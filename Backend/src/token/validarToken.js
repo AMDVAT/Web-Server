@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-    const keyToken = 'D4Ar51aWbT';
+    const keyToken = process.env.keyToken;
     const jwt = require('jsonwebtoken');
     const cabecera = req.headers['token'];
     if (typeof cabecera !== 'undefined') {
