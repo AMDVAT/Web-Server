@@ -18,7 +18,7 @@ module.exports = (router) => {
                 const id_reserva = data.id_reserva;
                 req.body.detalle_reserva.forEach(element => {
 
-                    const data_ = await req.container.resolve('DetailReservRepository').crearReserva(entradaCrearDetalleReserva(id_reserva, element));
+                    const data_ = await req.container.resolve('DetailReservRepository').crearDetailReserva(entradaCrearDetalleReserva(id_reserva, element));
                     const { data_: detalle } = data_;
 
                     if (data_.success && detalle) {
