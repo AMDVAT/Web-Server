@@ -1,7 +1,7 @@
-const consultarToken = require('../../src/token/consultarToken');
+const validarToken = require('../../src/token/validarToken');
 
 module.exports = (router) => {
-    router.post('/', async (req, res) => {
+    router.post('/', validarToken, async (req, res) => {
         try {
             //insercion de la reserva
             const entradaCrearReserva = require('../../src/mapeoObjetos/reserva/entrada/entradaCrearReserva');
