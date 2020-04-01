@@ -144,6 +144,19 @@ permiso			INTEGER NOT NULL
 
 ALTER TABLE funcion_tipoUsuario ADD CONSTRAINT funciontipo_pk PRIMARY KEY ( id_funcion, id_tipoUsuario );
 
+CREATE TABLE suscripcion(
+id_suscripcion 		INTEGER PRIMARY KEY auto_increment,
+id_usuario 			INTEGER NOT NULL,	
+id_producto			INTEGER NOT NULL,
+id_estado	 		INTEGER NOT NULL,
+fecha				DATE
+);
+
+CREATE TABLE estado_suscripcion(
+id_estado 		INTEGER PRIMARY KEY auto_increment,
+nombre	 		VARCHAR(100) NOT NULL
+);
+
 
 ALTER TABLE categoria
     ADD CONSTRAINT categoria_categoria_fk FOREIGN KEY ( categoria_id_categoria )
@@ -233,3 +246,17 @@ ALTER TABLE funcion_tipoUsuario
 ALTER TABLE funcion_tipoUsuario
     ADD CONSTRAINT tipo_FuncionTipo_fk FOREIGN KEY ( id_tipousuario )
         REFERENCES tipo_usuario ( id_tipousuario );
+
+ALTER TABLE suscripcion
+    ADD CONSTRAINT suscrip_usuario FOREIGN KEY ( id_usuario )
+        REFERENCES usuario ( id_usuario );
+        
+ALTER TABLE suscripcion
+    ADD CONSTRAINT suscrip_producto FOREIGN KEY ( id_producto )
+        REFERENCES producto ( id_producto );
+        
+ALTER TABLE suscripcion
+    ADD CONSTRAINT suscrip_estado FOREIGN KEY ( id_estado )
+        REFERENCES estado_suscripcion ( id_estado );
+        
+        
