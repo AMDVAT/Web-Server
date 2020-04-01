@@ -28,7 +28,9 @@ module.exports = (router) => {
             else {
                 res.status(401).send({ mensaje: 'Credenciales incorrectas' });
             }
+            res.message = data;
         } catch (error) {
+            res.message = error;
             res.status(500).send({ mensaje: 'No se pudo obtener los datos.' });
         }
     });
