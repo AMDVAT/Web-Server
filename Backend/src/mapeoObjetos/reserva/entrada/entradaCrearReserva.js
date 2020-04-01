@@ -1,6 +1,6 @@
 module.exports = (req) => {
     const consultarToken = require('../../../token/consultarToken');
-    let now = new Date();
+    let now = new Date(); // Posible mapeo adicional
     const token = req.headers['token'];
     return {
         data: {

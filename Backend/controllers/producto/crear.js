@@ -4,16 +4,14 @@ const creacionImagenesProducto = require('../../src/manejoImagenes/creacionImage
 module.exports = (router) => {
     router.post('/', validarToken, async (req, res) => {
         try {
-            let mensajeRegistro = null;
             const urlImagen = await creacionImagenesProducto(req, res);
             const data = await req.container.resolve('ProductRepository').crearProducto(req.body, { urlImagen });
-            if (urlImagen) mensajeRegistro = 'El producto se guardo correctamente, pero la imagen no pudo ser almacenada.';
             const { data: producto } = data;
             let statusCode = 400;
             if (data.success && producto) {
                 statusCode = 200;
                 if (!urlImagen) {
-                    data.message = mensajeRegistro;
+                    data.message = 'El producto se guardo correctamente, pero la imagen no pudo ser almacenada.';
                 }
             }
             res.status(statusCode).send({ mensaje: data.message });

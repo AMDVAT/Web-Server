@@ -1,7 +1,7 @@
-const consultarToken = require('../../src/token/consultarToken');
+const validarToken = require('../../src/token/validarToken');
 
 module.exports = (router) => {
-    router.post('/', async (req, res) => {
+    router.post('/', validarToken, async (req, res) => {
         try {
             //insercion de la reserva
             const entradaCrearReserva = require('../../src/mapeoObjetos/reserva/entrada/entradaCrearReserva');
@@ -15,10 +15,12 @@ module.exports = (router) => {
                 statusCode = 200;
 
                 //despues de hacer la insercion de la reserva insertar en detalle_reserva
-                const id_reserva = data.id_reserva;
+                // Cambiar a un for, no usar el for hab
+                const id_reserva = reserva.id_reserva;
                 req.body.detalle_reserva.forEach(element => {
 
-                    const data_ = await req.container.resolve('DetailReservRepository').crearDetailReserva(entradaCrearDetalleReserva(id_reserva, element));
+                    const data_ = await req.container.resolve('DetailReservRepository')
+                        .crearDetailReserva(entradaCrearDetalleReserva(id_reserva, element));
                     const { data_: detalle } = data_;
 
                     if (data_.success && detalle) {
