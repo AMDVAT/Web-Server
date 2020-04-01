@@ -10,7 +10,9 @@ module.exports = (router) => {
                 statusCode = 200;
             }
             res.status(statusCode).send({ mensaje: data.message });
+            res.message = data;
         } catch (error) {
+            res.message = error;
             res.status(500).send({ mensaje: 'No se pudo completar la solicitud' });
         }
     });
