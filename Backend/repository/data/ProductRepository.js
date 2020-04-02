@@ -1,5 +1,6 @@
 class ProductRepository {
     constructor(opts) {
+        this.SearchRepository = opts.SearchRepository;
         this.ProductDataRepository = opts.ProductDataRepository;
         this.CategoriaDataRepository = opts.CategoriaDataRepository;
     }
@@ -26,7 +27,7 @@ class ProductRepository {
             });
         } catch (error) {
             response.success = false;
-            response.message = 'Error al obtener productos, intente mas tarde.'
+            response.message = 'Error al obtener productos, intente mas tarde.';
         }
         return response;
     }
@@ -49,10 +50,10 @@ class ProductRepository {
         };
         try {
             response.data = await this.ProductDataRepository.create(producto);
-            response.message = 'Producto creado correctamente.'
+            response.message = 'Producto creado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al crear un producto, intente mas tarde.'
+            response.message = 'Error al crear un producto, intente mas tarde.';
         }
         return response;
     }
@@ -74,10 +75,10 @@ class ProductRepository {
         };
         try {
             response.data = await this.ProductDataRepository.update(producto, { where: { id_producto } });
-            response.message = 'Producto actualizado correctamente.'
+            response.message = 'Producto actualizado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al actualizar un producto, intente mas tarde.'
+            response.message = 'Error al actualizar un producto, intente mas tarde.';
         }
         return response;
     }
@@ -94,16 +95,16 @@ class ProductRepository {
         };
         try {
             response.data = await this.ProductDataRepository.update(producto, { where: { id_producto } });
-            response.message = 'Producto eliminado correctamente.'
+            response.message = 'Producto eliminado correctamente.';
         } catch (error) {
             response.success = false;
-            response.message = 'Error al eliminar el producto, intente mas tarde.'
+            response.message = 'Error al eliminar el producto, intente mas tarde.';
         }
         return response;
     }
 
     async buscarProducto(query) {
-        const { nombre, id_producto, id_categoria } = query;
+        const { nombre, id_producto, id_categoria, idUsuario } = query;
         const response = {
             data: null,
             message: null,
@@ -141,8 +142,11 @@ class ProductRepository {
                 order: [['nombre', 'ASC']],
                 where: { ...filtroProducto }
             });
+            await this.SearchRepository
+                .crearProductoBusqueda({ idUsuario, productos: response.data });
             response.message = 'Producto encontrado correctamente.';
         } catch (error) {
+            response.data = error;
             response.success = false;
             response.message = 'Error al buscar el producto, intente mas tarde.';
         }
@@ -172,7 +176,7 @@ class ProductRepository {
             });
         } catch (error) {
             response.success = false;
-            response.message = 'Error al obtener productos, intente mas tarde.'
+            response.message = 'Error al obtener productos, intente mas tarde.';
         }
         return response;
     }

@@ -1,7 +1,8 @@
 module.exports = (router) => {
     router.get('/', async (req, res) => {
         try {
-            const data = await req.container.resolve('ProductRepository').buscarProducto(req.query);
+            const data = await req.container.resolve('ProductRepository')
+                .buscarProducto({ ...req.query, ...req.tokenData });
             const { data: productos } = data;
             if (data.success && productos) {
                 res.send(productos);
