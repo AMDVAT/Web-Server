@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
         req.token = token;
 
         /* verificar que el token de un administrador este haciendo la peticion */
-        jwt.verify(req.token, keyToken, (err) => {
+        req.tokenData = jwt.verify(req.token, keyToken, (err) => {
             if (err) {
                 res.status(403).send({ mensaje: 'Token no valido.' });
             } else {
