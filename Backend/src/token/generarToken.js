@@ -1,5 +1,5 @@
 module.exports = (payload) => {
-    const keyToken = 'D4Ar51aWbT';
+    const keyToken = process.env.keyToken;
     const jwt = require('jsonwebtoken');
     return jwt.sign(payload
         , keyToken, {                                                    //{id}  -  llave -> palabra secreta

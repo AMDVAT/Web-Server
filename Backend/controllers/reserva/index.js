@@ -15,21 +15,19 @@ module.exports = (router) => {
                 statusCode = 200;
 
                 //despues de hacer la insercion de la reserva insertar en detalle_reserva
-                // Cambiar a un for, no usar el for hab
-                const id_reserva = reserva.id_reserva;
-                req.body.detalle_reserva.forEach(element => {
 
+                for (const element in req.body.detalle_reserva) {
                     const data_ = await req.container.resolve('DetailReservRepository')
-                        .crearDetailReserva(entradaCrearDetalleReserva(id_reserva, element));
-                    const { data_: detalle } = data_;
+                        .crearDetailReserva(entradaCrearDetalleReserva(reserva.id_reserva, element));
 
+                    const { data_: detalle } = data_;
                     if (data_.success && detalle) {
                         statusCode = 200;
                     } else {
                         statusCode = 400;
-                        return;
+                        break;
                     }
-                });
+                }
             }
             res.status(statusCode).send({ mensaje: data.message });
         } catch (error) {
