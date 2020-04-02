@@ -6,7 +6,7 @@ module.exports = (req) => {
         data: {
             fecha: now,
             estado: 3, //estado 'pendiente'
-            id_usuario: consultarToken({ token: token })
+            idUsuario: consultarToken({ token: token })
         }
     };
 };

@@ -7,7 +7,7 @@ module.exports = (router) => {
             const entradaCrearReserva = require('../../src/mapeoObjetos/reserva/entrada/entradaCrearReserva');
             const entradaCrearDetalleReserva = require('../../src/mapeoObjetos/reserva/entrada/entradaCrearDetalleReserva');
 
-            const data = await req.container.resolve('ReservRepository').crearReserva(entradaCrearReserva(req));
+            const data = await req.container.resolve('ReservationRepository').crearReserva(entradaCrearReserva(req));
             const { data: reserva } = data;
             let statusCode = 400;
 
@@ -16,11 +16,10 @@ module.exports = (router) => {
 
                 //despues de hacer la insercion de la reserva insertar en detalle_reserva
 
-                for (const element in req.body.detalle_reserva) {
-                    const data_ = await req.container.resolve('DetailReservRepository')
-                        .crearDetailReserva(entradaCrearDetalleReserva(reserva.id_reserva, element));
-
-                    const { data_: detalle } = data_;
+                for (const element of req.body.detalle_reserva) {
+                    const data_ = await req.container.resolve('DetailReservationRepository')
+                        .crearDetalleReserva(entradaCrearDetalleReserva(reserva.idReserva, element));
+                    const { data: detalle } = data_;
                     if (data_.success && detalle) {
                         statusCode = 200;
                     } else {
