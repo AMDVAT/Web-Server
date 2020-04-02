@@ -43,6 +43,44 @@ class UserRepository {
         }
         return response;
     }
+    async buscarUsuarioEmail(params) {
+        const email_usuario = params.email;
+        const response = {
+            data: null,
+            message: null,
+            success: true
+        };
+        try {
+            // Listado de usuarios ordenados alfabeticamente
+            response.data = await this.UserDataRepository.findOne({
+                raw: true,
+                attributes: {
+                    include: [
+                        [this.UserTypeDataRepository.sequelize.col('tipoUsuario.nombre')
+                            , 'nombre_tipo_usuario'],
+                        [this.UserStatusDataRepository.sequelize.col('estadoUsuario.nombre')
+                            , 'nombre_estado_usuario']
+                    ]
+                },
+                include: [{
+                    model: this.UserTypeDataRepository,
+                    required: true,
+                    attributes: []
+                }, {
+                    model: this.UserStatusDataRepository,
+                    required: true,
+                    attributes: []
+                }],
+                // order: [['nombre', 'ASC'], ['apellido', 'ASC']],
+                where: { email: email_usuario }
+            });
+            if (!response.data) response.message = 'No se ha podido encontrar el elemento solicitado.';
+        } catch (error) {
+            response.success = false;
+            response.message = 'Error al obtener los datos, intente mas tarde.';
+        }
+        return response;
+    }
 
     async listaUsuarios() {
         const response = {

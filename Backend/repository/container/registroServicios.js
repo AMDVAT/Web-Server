@@ -6,6 +6,8 @@ const CategoryRepository = require('../data/CategoryRepository');
 const StoreRepository = require('../data/StoreRepository');
 const ReservationRepository = require('../data/ReservationRepository');
 const DetailReservationRepository = require('../data/DetailReservationRepository');
+const SuscriptionRepository = require('../data/SuscriptionRepository');
+const SearchRepository = require('../data/SearchRepository');
 
 const container = awilix.createContainer();
 
@@ -17,6 +19,8 @@ container.register({
     StoreRepository: awilix.asClass(StoreRepository),
     ReservationRepository: awilix.asClass(ReservationRepository),
     DetailReservationRepository: awilix.asClass(DetailReservationRepository)
+    SuscriptionRepository: awilix.asClass(SuscriptionRepository),
+    SearchRepository: awilix.asClass(SearchRepository)
 });
 
 module.exports = container;

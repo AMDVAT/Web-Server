@@ -1,12 +1,13 @@
-const validarToken = require('../../../src/token/validarToken');
+const validarToken = require('../../src/token/validarToken');
 
 module.exports = (router) => {
     router.post('/', validarToken, async (req, res) => {
+        const entradaCrearSuscripcion = require('../../src/mapeoObjetos/suscripcion/entrada/entradaCrearSuscripcion');
         try {
-            const data = await req.container.resolve('CategoryRepository').crearCategoria(req.body);
-            const { data: categoria } = data;
+            const data = await req.container.resolve('SuscriptionRepository').crearSuscripcion(entradaCrearSuscripcion(req));
+            const { data: suscripcion } = data;
             let statusCode = 400;
-            if (data.success && categoria) {
+            if (data.success && suscripcion) {
                 statusCode = 200;
             }
             res.status(statusCode).send({ mensaje: data.message });
