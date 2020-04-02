@@ -18,7 +18,7 @@ container.register({
     CategoryRepository: awilix.asClass(CategoryRepository),
     StoreRepository: awilix.asClass(StoreRepository),
     ReservationRepository: awilix.asClass(ReservationRepository),
-    DetailReservationRepository: awilix.asClass(DetailReservationRepository)
+    DetailReservationRepository: awilix.asClass(DetailReservationRepository),
     SuscriptionRepository: awilix.asClass(SuscriptionRepository),
     SearchRepository: awilix.asClass(SearchRepository)
 });
