@@ -1,18 +1,54 @@
 node {
-    sh("cp /home/Dockerfile .")
-    stage('Preparation') {
+    sh 'printenv'
+    def payload = readJSON text: BODY
+    // echo "${payload.pull_request.head}"
+    def deployAction = env.BODY_pull_request_merged
+    def branch_name = payload.pull_request && !deployAction ? payload.pull_request.head.ref : payload.repository.default_branch
+    String gitHash = "${payload.pull_request.head.sha}"
+    echo "${branch_name}"
+    String buildUrl = "${BUILD_URL}"
+    String gitStatusPostUrl = "https://7a6d1f9ad047f89011e4f1eda5ce61a02cff7684:x-oauth-basic@api.github.com/repos/AMDVAT/Web-Server/statuses/${gitHash}"
+    try{
+        stage('Sync Pending Status'){
+            sh """
+            curl -X POST -H "application/json" -d '{"state":"pending", "target_url":"${buildUrl}", "description":"Build Pending", "context":"build/job"}' "${gitStatusPostUrl}"
+            """
+        }
+        stage('Preparation') {
+            sh("cp /home/Dockerfile .")
         dir('Data-Layer') {
             git branch: 'develop',
             url: 'https://github.com/AMDVAT/Data-Layer.git'
         }
         dir('Web-Server') {
-            git branch: 'develop',
+            git branch: branch_name,
             url: 'https://github.com/AMDVAT/Web-Server.git'
         }
-    }                                     
-    stage('docker build/push') {            
-     docker.withRegistry('https://index.docker.io/v1/', '7fdd6dbb-2e62-4cc1-b161-86e42eaaf93a') {
-       def app = docker.build("charliecech/docker-jenkins-example", '.').push()
-     }                                     
-   } 
+        }                                     
+        stage('Docker Build/Push') {            
+       docker.withRegistry('https://index.docker.io/v1/', '7fdd6dbb-2e62-4cc1-b161-86e42eaaf93a') {
+       def app = docker.build("charliecech/docker-jenkins-example", '.')
+       if(deployAction) {
+           app.push()
+       }
+       }
+     }
+    stage("Deploy to Staging") {
+       if(deployAction) {
+            sh "docker rm -f amdvat"
+            sh "docker run -p 9250:8000 -d --name amdvat charliecech/docker-jenkins-example" 
+       }                            
+   }
+        stage('Send Success Status'){
+            sh """
+curl -X POST -H "application/json" -d '{"state":"success", "target_url":"${buildUrl}", "description":"Build Success", "context":"build/job"}' "${gitStatusPostUrl}"
+"""
+        }
+    }
+    catch(exc) {
+            sh """
+curl -X POST -H "application/json" -d '{"state":"error", "target_url":"${buildUrl}", "description":"Build Error", "context":"build/job"}' "${gitStatusPostUrl}"
+"""
+        throw exc
+    }
 }

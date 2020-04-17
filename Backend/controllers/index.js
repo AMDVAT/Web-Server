@@ -6,7 +6,8 @@ module.exports = function (router) {
     router.get('/', function (req, res) {
 
         res.json({
-            saludo: 'Mostrar vision y mision de la aplicacion movil.'
+            saludo: 'Mostrar vision y mision de la aplicacion movil.',
+            mensaje: 'Esta es una prueba de CI/CD'
         });
 
     });
