@@ -33,6 +33,7 @@ class ReservationRepository {
                 // order: [['nombre', 'ASC']]
             });
         } catch (error) {
+            response.data = error;
             response.success = false;
             response.message = 'Error al obtener reservas, intente mas tarde.';
         }
