@@ -10,7 +10,6 @@ const { Loggly } = require('winston-loggly-bulk');
 const bodyParser = require('body-parser');
 const container = require('./repository/container/registroServicios');
 const DataBaseRepository = require('./repository/database/DataBaseRepository');
-
 var server;
 /*
  * Create and start HTTP server.
@@ -76,7 +75,8 @@ app.use((req, res, next) => {
             input: {
                 body: req.body,
                 query: req.query,
-                params: req.params
+                params: req.params,
+                headers: req.headers
             },
         };
         sendLog(levelName(syslog.statusCode), syslog);
