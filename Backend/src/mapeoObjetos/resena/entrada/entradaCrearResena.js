@@ -3,8 +3,8 @@ module.exports = (body) => {
         data: {
             comentario: body.comentario,
             valoracion: body.valoracion,
-            usuario: body.id_usuario,
-            producto: body.id_producto,
+            id_usuario: body.usuario,
+            id_producto: body.producto,
         }
     };
 };

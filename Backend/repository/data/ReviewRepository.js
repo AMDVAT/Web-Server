@@ -5,23 +5,18 @@ class ReviewRepository {
         this.UserDataRepository = opts.UserDataRepository;
     }
 
-    async crearResena(body) {
-        const resena = {
-            comentario: body.comentario,
-            valoracion: body.valoracion,
-            id_usuario: body.id_usuario,
-            id_producto: body.id_producto,
-        };
+    async crearResena({ data }) {
         const response = {
             data: null,
             message: null,
             success: true
         };
         try {
-            response.data = await this.Re.create(resena);
+            response.data = await this.ReviewDataRepository.create(data);
             response.message = 'Resena creada correctamente.';
         } catch (error) {
             response.success = false;
+            response.data = error;
             response.message = 'Error al crear una resena.';
         }
         return response;

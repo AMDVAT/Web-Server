@@ -31,15 +31,12 @@ describe('index', function () {
     });
 
 
-    it('should have model name "index"', function (done) {
+    it('should have index page.', function (done) {
         request(mock)
             .get('/')
             .expect(200)
-            .expect('Content-Type', /html/)
-            
-                .expect(/"name": "index"/)
-            
-            .end(function (err, res) {
+            .expect('Content-Type', /application\/json/)
+            .end(function (err) {
                 done(err);
             });
     });
