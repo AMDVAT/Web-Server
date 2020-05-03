@@ -13,7 +13,7 @@ class ReservationRepository {
             success: true
         };
         try {
-            console.log('hola',this.ReservationDataRepository);
+            // console.log('hola',this.ReservationDataRepository);
             // Listado de productos ordenados alfabeticamente
             response.data = await this.ReservationDataRepository.findAll({
                 // raw: true,
