@@ -12,6 +12,11 @@ describe('Crear Resena.', function () {
             "usuario": "1",
             "producto": "1"
         };
+        resenaIncorrecta = {
+            "comentario": "Muy buen producto",
+            "usuario": "1",
+            "producto": "1"
+        }
         done()
     });
 
