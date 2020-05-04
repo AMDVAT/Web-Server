@@ -15,4 +15,10 @@ describe('Crear Resena.', function () {
         done()
     });
 
+    it('Mapeo correcto de registro de resena', function (done) {
+        expect(entradaResena(resena))
+            .to.be.a('object');
+        done();
+    });
+
 });
