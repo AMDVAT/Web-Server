@@ -11,6 +11,7 @@
   "bugs": {
     "url": "https://github.com/jrburke/r.js/issues"
   },
+  "deprecated": false,
   "description": "Node adapter for RequireJS, for loading AMD modules. Includes RequireJS optimizer",
   "engines": {
     "node": ">=0.4.0"
