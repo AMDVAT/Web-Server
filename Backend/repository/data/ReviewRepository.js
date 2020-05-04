@@ -42,6 +42,14 @@ class ReviewRepository {
         try {
             response.data = await this.ReviewDataRepository.findAll({
                 raw: true,
+                attributes: {
+                    include: [[this.UserDataRepository.sequelize.col('usuario.nombre'), 'nombre_usuario']]
+                },
+                include: {
+                    model: this.UserDataRepository,
+                    required: true,
+                    attributes: []
+                },
                 where: { ...filtroProducto }
             });
         } catch (error) {
