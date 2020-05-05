@@ -3,7 +3,7 @@ let expect = require('chai').expect;
 describe('Crear Resena.', function () {
 
     const entradaResena = require('../src/mapeoObjetos/resena/entrada/entradaCrearResena');
-    let resena;
+    let resena, resenaIncorrecta;
 
     beforeEach(function (done) {
         resena = {
@@ -16,13 +16,20 @@ describe('Crear Resena.', function () {
             "comentario": "Muy buen producto",
             "usuario": "1",
             "producto": "1"
-        }
+        };
         done()
     });
 
     it('Mapeo correcto de registro de resena', function (done) {
         expect(entradaResena(resena))
             .to.be.a('object');
+        done();
+    });
+
+    it('Resena sin valoracion no aceptada', function (done){
+        const review = entradaResena(resenaIncorrecta);
+        expect(review.valoracion)
+            .to.be.a('undefined');
         done();
     });
 
