@@ -52,6 +52,7 @@ class ProductRepository {
             response.data = await this.ProductDataRepository.create(producto);
             response.message = 'Producto creado correctamente.';
         } catch (error) {
+            response.data = error;
             response.success = false;
             response.message = 'Error al crear un producto, intente mas tarde.';
         }
