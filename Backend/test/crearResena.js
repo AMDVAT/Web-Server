@@ -17,6 +17,11 @@ describe('Crear Resena.', function () {
             "usuario": "1",
             "producto": "1"
         };
+        resenaSinComentario = {
+            "valoracion": "5",
+            "usuario": "1",
+            "producto": "1"
+        }
         done()
     });
 
@@ -32,5 +37,6 @@ describe('Crear Resena.', function () {
             .to.be.a('undefined');
         done();
     });
+
 
 });
