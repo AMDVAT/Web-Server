@@ -3,7 +3,7 @@ let expect = require('chai').expect;
 describe('Crear Resena.', function () {
 
     const entradaResena = require('../src/mapeoObjetos/resena/entrada/entradaCrearResena');
-    let resena, resenaIncorrecta;
+    let resena, resenaIncorrecta,resenaSinComentario;
 
     beforeEach(function (done) {
         resena = {
@@ -38,5 +38,11 @@ describe('Crear Resena.', function () {
         done();
     });
 
+    it('Resena sin comentario no aceptada', function (done){
+        const review = entradaResena(resenaSinComentario);
+        expect(review.comentario)
+            .to.be.a('undefined');
+        done();
+    });
 
 });
