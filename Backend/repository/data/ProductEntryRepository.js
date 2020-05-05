@@ -55,7 +55,7 @@ class ProductEntryRepository {
                     nombreProducto: element.producto.nombre,
                 };
                 const amqp = require('amqplib/callback_api');
-                amqp.connect('amqp://localhost', function (error0, connection) {
+                amqp.connect('amqp://64.225.24.183:5672', function (error0, connection) {
                     if (error0) {
                         throw error0;
                     }
