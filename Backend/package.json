@@ -13,6 +13,7 @@
         "postinstall": "grunt postinstall"
     },
     "dependencies": {
+        "amqplib": "^0.5.5",
         "awilix": "^4.2.5",
         "construx": "^1.0.0",
         "construx-copier": "^1.0.0",
