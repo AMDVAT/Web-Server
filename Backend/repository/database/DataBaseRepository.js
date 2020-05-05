@@ -26,6 +26,8 @@ class DataBaseRepository {
         this.registroModelos.SuscriptionDataRepository = asValue(modelo.suscripcion);
         this.registroModelos.SearchDataRepository = asValue(modelo.busqueda);
         this.registroModelos.ReviewDataRepository = asValue(modelo.resena);
+        this.registroModelos.ProductEntryDataRepository = asValue(modelo.entrada_producto);
+        this.registroModelos.StockDataRepository = asValue(modelo.stock);
     }
 
     crearConexion() {
