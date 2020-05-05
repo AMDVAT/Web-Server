@@ -1,5 +1,6 @@
 class DetalleCompraRepository {
     constructor(opts) {
+        this.StockDataRepository = opts.StockDataRepository;
         this.DetalleCompraDataRepository = opts.DetalleCompraDataRepository;
     }
 
@@ -11,6 +12,18 @@ class DetalleCompraRepository {
         };
         try {
             response.data = await this.DetalleCompraDataRepository.create(data);
+            const actualData = await this.StockDataRepository.findOne({
+                where: { idSucursal: 1, idProducto: data.id_producto }
+            });
+            if (actualData) {
+                this.StockDataRepository.update({
+                    idSucursal: 1
+                    , idProducto: data.id_producto
+                    , cantidad: actualData.cantidad - data.cantidad
+                }, {
+                    where: { idSucursal: 1, idProducto: data.id_producto }
+                });
+            }
             response.message = 'Detalle compra creada correctamente.';
         } catch (error) {
             response.data = error;
