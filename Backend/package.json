@@ -41,7 +41,7 @@
         "grunt-mocha-cli": "^1.14.0",
         "mocha": "^1.18.0",
         "nodemon": "^2.0.2",
-        "supertest": "^0.9.0",
+        "supertest": "^6.3.3",
         "winston-loggly-bulk": "^3.0.1"
     },
     "browserPackage": {
